@@ -1,0 +1,8 @@
+PORT=8000
+HOST=localhost
+
+DB_HOST=localhost
+DB_PORT=27017
+DB_NAME=bord
+DB_USER=bord_admin
+DB_PW=database_password

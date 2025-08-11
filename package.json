@@ -1,0 +1,31 @@
+{
+  "name": "cbord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run clean && tsc && npm run copy-files",
+    "clean": "rm -rf ./dist",
+    "copy-files": "cp -r ./src/static ./src/views ./dist",
+    "start": "node ./dist/server.js",
+    "dev": "ts-node-dev --respawn src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.1.0",
+    "typescript": "^5.9.2"
+  }
+}

@@ -3,6 +3,7 @@
   --bgtone: #373737; /*#1f1f1f;*/
   --bgtone-rgb: 55, 55, 55;
   --text: #f0efea;
+  --text-rgb: 240, 239, 234;
   --contrast: #2563eb; /*#ff007f;*/
   --border: #5e5e5e;
   --border-rgb: 94, 94, 94;
@@ -14,6 +15,7 @@
 [color-theme='light'] {
   --bg: #f0efea;
   --text: #474b58;
+  --text-rgb: 71, 75, 88;
   --bgtone: #e4e4e2; /*#d5d6d6;*/
   --bgtone-rgb: 228, 228, 226; /*213, 214, 214;*/
   /*
@@ -27,6 +29,7 @@
   :root {
     --bg: #f0efea;
     --text: #474b58;
+    --text-rgb: 71, 75, 88;
     --bgtone: #e4e4e2; /*#d5d6d6;*/
     --bgtone-rgb: 228, 228, 226; /*213, 214, 214;*/
     --error: #ff8585;
@@ -219,10 +222,20 @@ body {
 
 .card-time {
   padding-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(var(--text-rgb), 0.75);
+}
+
+.card-org {
+  font-size: 0.8rem;
+  padding-block: 0.2rem;
+  color: rgba(var(--text-rgb), 0.75);
 }
 
 .card-loc {
-  padding-block: 0.5xrem;
+  padding-block: 0.2rem;
+  font-size: 0.8rem;
+  color: rgba(var(--text-rgb), 0.75);
 }
 
 .card-img {

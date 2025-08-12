@@ -24,6 +24,7 @@ const dates = [
       {
         img: 'test_flier.jpg',
         title: 'BGR Event',
+        org: 'Purdue',
         loc: 'Boiler Park',
         time: '4:00 PM',
         tags: ['Food', 'Games', 'Music'],
@@ -31,6 +32,7 @@ const dates = [
       {
         img: 'test_flier2.jpg',
         title: 'Philosophy Talk',
+        org: 'Socratic Club',
         loc: 'ET 314',
         time: '6:30 PM',
         tags: ['Food', 'Academic'],
@@ -43,6 +45,7 @@ const dates = [
       {
         img: 'test_flier3.jpg',
         title: 'Vinyl Tasting',
+        org: 'Music Club',
         loc: 'CC 450',
         time: '9:30 AM',
         tags: ['Food', 'Music', 'Art'],

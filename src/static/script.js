@@ -12,3 +12,4 @@ function resizeImages() {
 }
 
 window.addEventListener('load', resizeImages);
+window.addEventListener('resize', resizeImages);

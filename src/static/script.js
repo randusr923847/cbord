@@ -1,16 +1,20 @@
 function resizeImages() {
-  let cardBody = document.querySelector('.card-body');
-  let cardImg = document.querySelector('.card-img img');
+  let cards = document.querySelectorAll('.card');
 
-  if (cardBody && cardImg) {
-    let height = 0;
+  cards.forEach((card) => {
+    let cardBody = card.querySelector('.card-body');
+    let cardImg = card.querySelector('.card-img img');
 
-    Array.from(cardBody.children).forEach((item) => {
-      height += item.offsetHeight;
-    });
+    if (cardBody && cardImg) {
+      let height = 0;
 
-    cardImg.style.maxHeight = `calc(${height}px + 2rem)`;
-  }
+      Array.from(cardBody.children).forEach((item) => {
+        height += item.offsetHeight;
+      });
+
+      cardImg.style.maxHeight = `calc(${height}px + 2rem)`;
+    }
+  });
 }
 
 window.addEventListener('load', resizeImages);

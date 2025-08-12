@@ -1,19 +1,19 @@
-<div class="card">
+<div id="card-<%= id %>" class="card">
   <div class="card-img">
     <img
-      src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/gallery-images/kd/12b33577-492a-4ae2-af6f-f7cd814d862c"
+      src="./static/<%= event.img %>"
       alt="..."
     />
   </div>
 
   <div class="card-body">
-    <p class="card-time">4:00 PM</p>
-    <h2 class="card-title">BGR Event</h2>
-    <p class="card-loc">Boiler Park</p>
+    <p class="card-time"><%= event.time %></p>
+    <h2 class="card-title"><%= event.title %></h2>
+    <p class="card-loc"><%= event.loc %></p>
     <div class="card-tags">
-      <p>Food</p>
-      <p>Games</p>
-      <p>Music</p>
+      <% for(let i = 0; i < event.tags.length; i++) { %>
+      <p><%= event.tags[i] %></p>
+      <% } %>
     </div>
   </div>
 </div>

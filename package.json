@@ -9,7 +9,10 @@
     "copy-files": "cp -r ./src/static ./src/views ./dist",
     "start": "node ./dist/server.js",
     "dev": "ts-node-dev --respawn src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildw": "npm run cleanw && tsc && npm run copy-filesw",
+    "cleanw": "if exist .\\dist rd /s /q .\\dist",
+    "copy-filesw": "xcopy .\\src\\static .\\dist\\static /i /e && xcopy .\\src\\views .\\dist\\views /i /e"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +29,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.1.0",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2"
   }
 }

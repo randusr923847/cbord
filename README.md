@@ -12,3 +12,4 @@ To set up a local dev environment:
 Run `npm install` to install dependencies.
 
 Run `npm run build` to build `/src` to `/dist`, and `npm start` to start the server.
+(On Windows, use `npm run buildw`)

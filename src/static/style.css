@@ -266,6 +266,26 @@ body {
 }
 
 @media only screen and (max-width: 430px) {
+  .event-date {
+    font-size: 0.8rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .card-time {
+    font-size: 0.65rem;
+    padding-bottom: 0.35rem;
+  }
+  .card-org {
+    font-size: 0.65rem;
+    padding-block: 0.1rem;
+  }
+  .card-loc {
+    font-size: 0.65rem;
+    padding-block: 0.1rem;
+  }
+  .card-body {
+    font-size: 0.8rem;
+  }
   .card-tags p {
     font-size: 0.65rem;
   }
@@ -278,11 +298,8 @@ body {
 .footer {
   width: 100%;
   max-width: 700px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-inline: auto;
   background-color: var(--bg); /* Dark slate gray */
-  position: absolute;
-  bottom: 0;
   padding-top: 1rem;
   z-index: 1000;
   color: var(--text);

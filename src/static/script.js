@@ -5,7 +5,9 @@ function resizeImages() {
   if (cardBody && cardImg) {
     let height = 0;
 
-    Array.from(cardBody.children).forEach((item) => {height += item.offsetHeight});
+    Array.from(cardBody.children).forEach((item) => {
+      height += item.offsetHeight;
+    });
 
     cardImg.style.maxHeight = `calc(${height}px + 2rem)`;
   }

@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>College Event Website</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./static/style.css">
-</head>
-<body>
-
+    <link rel="icon" type="image/x-icon" href="./static/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./static/style.css" />
+  </head>
+  <body>
     <%- include('partials/header.ejs') %>
 
     <div class="container">
+      <div class="event-container">
+        <h3 class="event-date">Today</h3>
 
-        <div class="event-container">
-
-            <h3 class="event-date">Today</h3>
-
-            <%- include('partials/card.ejs') %>
-
-        </div>
-
+        <%- include('partials/card.ejs') %>
+      </div>
     </div>
-
 
     <%- include('partials/footer.ejs') %>
 
     <script src="./static/script.js" charset="utf-8"></script>
-</body>
+  </body>
 </html>

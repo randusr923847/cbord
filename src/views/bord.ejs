@@ -23,6 +23,9 @@
         <% for(let j = 0; j < dates[i].events.length; j++) { %>
         <%- include('partials/card.ejs', {id:i+j, event:dates[i].events[j]}) %>
         <% } %>
+        <% if (i + 1 < dates.length) { %>
+        <hr>
+        <% } %>
         <% } %>
       </div>
     </div>

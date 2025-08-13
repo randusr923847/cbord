@@ -1,8 +1,9 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import path from 'path';
 
 import config from './config';
+import eventRouter from './routes/event';
 // import mongoose from './db';
 
 const app = express();
@@ -22,6 +23,7 @@ const dates = [
     date: 'Today',
     events: [
       {
+        id: 1,
         img: 'test_flier.jpg',
         title: 'BGR Event',
         org: 'Purdue',
@@ -30,6 +32,7 @@ const dates = [
         tags: ['Food', 'Games', 'Music'],
       },
       {
+        id: 2,
         img: 'test_flier2.jpg',
         title: 'Philosophy Talk',
         org: 'Socratic Club',
@@ -43,6 +46,7 @@ const dates = [
     date: 'Tomorrow',
     events: [
       {
+        id: 3,
         img: 'test_flier3.jpg',
         title: 'Vinyl Tasting',
         org: 'Music Club',
@@ -55,8 +59,24 @@ const dates = [
 ];
 
 // Routes
-app.get('/', (_req, res) => {
+app.get('/', (req, res) => {
   res.render('bord', { dates: dates });
+});
+
+app.get('/create', (req, res) => {
+  res.render('create');
+});
+
+app.use('/api/event', eventRouter);
+
+app.use('/{*any}', (req, res) => {
+  res.status(404).json({ error: 'Not Found' });
+});
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 app.listen(PORT, () => {

@@ -78,7 +78,6 @@ body {
 .header h1 {
   font-size: 2rem;
   display: inline;
-  float: left;
 }
 
 .header button {
@@ -152,6 +151,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;*/
+  background-color: var(--bg);
   color: var(--text);
   text-align: center;
   overflow: hidden;
@@ -310,6 +310,7 @@ body {
   padding-top: 1rem;
   z-index: 1000;
   color: var(--text);
+  border-top: var(--border) 1px solid;
 }
 
 .footer-el {

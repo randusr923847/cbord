@@ -13,6 +13,7 @@
     />
     <link rel="stylesheet" href="./static/style.css" />
     <link rel="stylesheet" href="./static/create.css" />
+    <link rel="stylesheet" href="./static/dropdown.css" />
   </head>
   <body>
     <div class="header">
@@ -29,8 +30,9 @@
               id="file"
               class="file"
               accept="image/png, image/jpeg"
+              tabindex="-1"
             />
-            <label for="file">Upload Image</label>
+            <label for="file" tabindex="-1">Upload Image</label>
           </div>
         </div>
         <div class="form-container">
@@ -39,6 +41,62 @@
             id="title"
             placeholder="Event Name"
           ></textarea>
+
+          <div class="organizer">
+            <label for="org">By</label>
+            <textarea
+              class="event-org"
+              id="org"
+              placeholder="Org Name"
+            ></textarea>
+          </div>
+
+          <%
+          // current datetime string in America/Chicago timezone
+          let indy_datetime_str = new Date().toLocaleString("en-US", { timeZone: "America/Indianapolis" });
+          // create new Date object
+          let date_indy = new Date(indy_datetime_str);
+          // year as (YYYY) format
+          let year = date_indy.getFullYear();
+          // month as (MM) format
+          let month = ("0" + (date_indy.getMonth() + 1)).slice(-2);
+          // date as (DD) format
+          let date = ("0" + date_indy.getDate()).slice(-2);
+          // date time in YYYY-MM-DD format
+          let min_date = year + "-" + month + "-" + date;
+          %>
+
+          <div class="date">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              class="form-date"
+              id="date"
+              onfocus="this.showPicker()"
+              min="<%= min_date %>"
+            />
+          </div>
+
+          <% function generateTimeList() { const times = []; let id = 0; for
+          (let hour = 0; hour < 24; hour++) { for (let minute = 0; minute < 60;
+          minute += 30) { let displayHr = hour === 0 ? 12 : hour > 12 ? hour -
+          12 : hour; let displayMin = minute.toString().padStart(2, '0'); let
+          tod = hour < 12 ? 'AM' : 'PM'; times.push({ id: id++, val:
+          `${displayHr}:${displayMin} ${tod}` }); } } return times; } let
+          start_dd = { id: 'start-time', placeholder: "Time", options: { 'id':
+          'start_time_opts', els: generateTimeList(), }, }; let end_dd = { id:
+          'end-time', placeholder: "Time", options: { 'id': 'end_time_opts',
+          els: generateTimeList(), }, }; %>
+
+          <div class="time">
+            <label for="<%= start_dd.id %>">Start</label>
+            <%- include('partials/dropdown.ejs', {dropdown: start_dd}) %>
+          </div>
+
+          <div class="time">
+            <label for="<%= end_dd.id %>">End</label>
+            <%- include('partials/dropdown.ejs', {dropdown: end_dd}) %>
+          </div>
         </div>
       </div>
     </div>
@@ -46,5 +104,6 @@
     <%- include('partials/footer.ejs') %>
 
     <script src="./static/create.js" charset="utf-8"></script>
+    <script src="./static/dropdown.js" charset="utf-8"></script>
   </body>
 </html>

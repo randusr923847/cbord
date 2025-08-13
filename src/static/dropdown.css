@@ -1,0 +1,117 @@
+/*
+Adapted from: https://thehelpfultipper.com/custom-input-dropdown-with-html-css-and-javascript/
+*/
+
+.dropdown_input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  box-sizing: border-box;
+  background-color: var(--bgtone);
+  color: var(--text);
+  caret-color: transparent;
+  cursor: pointer;
+
+  box-shadow:
+    inset -1px 1px 1px rgba(200, 200, 200, 0.2),
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+}
+
+.dropdown_input:hover {
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2);
+}
+
+/* Common styles to keep DRY */
+.dropdown_input,
+.options span {
+  font-size: 1rem;
+}
+
+.dropdown_input,
+.options_wrapper {
+  border: none;
+  outline: none;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  background: var(--bgtone);
+}
+
+/* ***** */
+
+.dropdown_input::placeholder {
+  color: var(--text);
+  opacity: 0.5;
+  letter-spacing: 0.05rem;
+}
+
+/* input::-webkit-calendar-picker-indicator {
+  display:none !important;
+} */
+
+.dropdown {
+  position: relative;
+  /*   background: salmon; */
+}
+
+.dropdown:after {
+  content: '▾';
+  padding: 1rem;
+  padding-top: 0.7rem;
+  position: absolute;
+  right: 5px;
+  color: var(--text);
+}
+
+.dropdown.active:after {
+  transform: rotate(180deg);
+}
+
+/*
+* Dropdown list custom design
+*/
+
+.dropdown_wrapper {
+  /*   background: pink; */
+  padding-block: 0.5rem;
+  height: 200px;
+  display: none;
+  position: fixed;
+  z-index: 9999;
+}
+
+.dropdown_wrapper.active {
+  display: block;
+}
+
+.options_wrapper {
+  overflow-y: hidden;
+  height: 100%;
+  padding: 0.2rem;
+  background: var(--bgtone);
+  box-shadow:
+    inset -1px 1px 1px rgba(200, 200, 200, 0.2),
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+}
+
+.options {
+  overflow-y: auto;
+  height: inherit;
+}
+
+.options span {
+  display: block;
+  padding: 1rem;
+  padding-inline: 1.5rem;
+  border-radius: 15px;
+  letter-spacing: 0.025rem;
+  color: var(--text);
+}
+
+.options span:hover {
+  background: rgba(var(--bg-rgb), 0.7);
+  color: var(--text);
+  cursor: pointer;
+}

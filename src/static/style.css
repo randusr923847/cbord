@@ -1,5 +1,6 @@
 :root {
   --bg: #292a2d; /*#242633;*/
+  --bg-rgb: 41, 42, 45;
   --bgtone: #373737; /*#1f1f1f;*/
   --bgtone-rgb: 55, 55, 55;
   --text: #f0efea;
@@ -15,6 +16,7 @@
 
 [color-theme='light'] {
   --bg: #f0efea;
+  --bg-rgb: 240, 239, 234;
   --text: #474b58;
   --text-rgb: 71, 75, 88;
   --bgtone: #e4e4e2; /*#d5d6d6;*/
@@ -30,6 +32,7 @@
 @media (prefers-color-scheme: light) {
   :root {
     --bg: #f0efea;
+    --bg-rgb: 240, 239, 234;
     --text: #474b58;
     --text-rgb: 71, 75, 88;
     --bgtone: #e4e4e2; /*#d5d6d6;*/

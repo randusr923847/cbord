@@ -1,0 +1,28 @@
+<!-- Adapted from: https://thehelpfultipper.com/custom-input-dropdown-with-html-css-and-javascript/ -->
+<div class="dropdown-container">
+  <div class="dropdown">
+    <input
+      class="dropdown_input"
+      type="text"
+      id="<%= dropdown.id %>"
+      placeholder="<%= dropdown.placeholder %>"
+      autocomplete="off"
+      tabindex="0"
+      readonly
+    />
+  </div>
+
+  <div class="dropdown_wrapper" tabindex="-1">
+    <div class="options_wrapper" tabindex="-1">
+      <div class="options" id="<%= dropdown.options.id %>" tabindex="-1">
+        <% for(var i = 0; i < dropdown.options.els.length; i++) { %>
+        <span
+          id="<%= dropdown.options.id %>_<%= dropdown.options.els[i].id %>"
+          tabindex="-1"
+          ><%= dropdown.options.els[i].val %></span
+        >
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

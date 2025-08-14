@@ -4,14 +4,16 @@
   --primary: #1F232D;
   --secondary: #364153;
 
-  --width: 500px;
+  --width: 600px;
 }
 
 * {
   margin: 0;
   padding: 0;
-  font-family: Arial;
+  font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;
+  text-decoration: none;
+  color: var(--text);
 }
 
 body {
@@ -30,7 +32,8 @@ hr {
 .header {
   display: flex;
   flex-direction: row;
-  width: var(--width);
+  max-width: var(--width);
+  width: 100%;
   align-items: center;
   padding: 10px;
   justify-content: space-between;
@@ -55,7 +58,8 @@ hr {
 }
 
 .container {
-  width: var(--width);
+  max-width: var(--width);
+  width: 100%;
   padding: 20px 10px;
 }
 
@@ -129,7 +133,7 @@ hr {
 }
 
 .card-title {
-  font-weight: normal;
+  font-weight: 450;
 }
 
 .card-loc {
@@ -154,7 +158,8 @@ hr {
 
 .footer {
   display: flex;
-  width: var(--width);
+  background: var(--bg);
+  width: 100%;
   justify-content: center;
   position: fixed;
   bottom: 0;

@@ -15,23 +15,32 @@
     <link rel="stylesheet" href="../static/event.css" />
   </head>
   <body>
-    <div class="event-page">
-      <div class="event-img">
-        <img src="./static/<%= event.img %>" alt="..." />
-      </div>
-      <div class="event-info">
-        <h1 class="event-title"><%= event.title %></h2>
-        <p class="event-date"><%= event.date %> at <%= event.start %> - <%= event.end %></p>
-        <p class="event-org"><%= event.org %></p>
-        <p class="event-loc"><%= event.loc %></p>
-        <div class="event-tags">
-          <% for (var val of event.tags) { %>
-          <p class="event-tag"><%= val %></p>
-          <% } %>
-        </div>
-      </div>
+    <!-- <%- include('partials/header.ejs') %> -->
 
-      <p class="event-desc"><%= event.desc %></p>
+    <div class="event-page">
+      <div class="event-content">
+        <div class="event-img">
+          <img src="../static/<%= event.img %>" alt="..." />
+        </div>
+        <div class="event-info">
+          <h1 class="event-title"><%= event.title %></h2>
+          <p class="event-time"><%= event.date %> at <%= event.start %> - <%= event.end %></p>
+          <p class="event-org"><%= event.org %></p>
+          <p class="event-loc"><%= event.loc %></p>
+          <div class="event-tags">Tags: 
+            <% for (var val of event.tags) { %>
+            <p class="event-tag"><%= val %></p>
+            <% } %>
+          </div>
+        </div>
+        
+      </div>
+      <div class="event-desc">
+        <p>Description</p>
+        <hr>
+        <p><%= event.desc %></p>
+      </div>
     </div>
+    <%- include('partials/footer.ejs') %>
   </body>
 </html>

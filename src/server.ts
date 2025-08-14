@@ -22,6 +22,7 @@ const dates = [
     date: 'Today',
     events: [
       {
+        id: '0',
         img: 'test_flier.jpg',
         title: 'BGR Event',
         org: 'Purdue',
@@ -30,6 +31,7 @@ const dates = [
         tags: ['Food', 'Games', 'Music'],
       },
       {
+        id: '1',
         img: 'test_flier2.jpg',
         title: 'Philosophy Talk',
         org: 'Socratic Club',
@@ -43,6 +45,7 @@ const dates = [
     date: 'Tomorrow',
     events: [
       {
+        id: '2',
         img: 'test_flier3.jpg',
         title: 'Vinyl Tasting',
         org: 'Music Club',
@@ -56,7 +59,7 @@ const dates = [
 
 const events = [
   {
-    id: '1',
+    id: '0',
     img: 'test_flier.jpg',
     title: 'BGR Event',
     org: 'Purdue',
@@ -73,7 +76,7 @@ const events = [
     tags: ['Food', 'Games', 'Music'],
   },
   {
-    id: '2',
+    id: '1',
     img: 'test_flier2.jpg',
     title: 'Philosophy Talk',
     org: 'Socratic Club',
@@ -89,7 +92,7 @@ const events = [
     tags: ['Free', 'Academic'],
   },
   {
-    id: '3',
+    id: '2',
     img: 'test_flier3.jpg',
     title: 'Vinyl Tasting',
     org: 'Music Club',

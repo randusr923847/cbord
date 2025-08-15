@@ -4,10 +4,13 @@ import path from 'path';
 
 import config from './config';
 import eventRouter from './routes/event';
-// import mongoose from './db';
+import mongoose from './db';
 
 const app = express();
 const PORT = config.server.port;
+
+//mongo
+console.log(mongoose.version) //just checking
 
 // Middleware
 app.use(cors());

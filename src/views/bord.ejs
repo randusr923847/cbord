@@ -17,18 +17,15 @@
     <%- include('partials/header.ejs') %>
 
     <div class="container">
-      <div class="event-container">
-        <% for(let i = 0; i < dates.length; i++) { %>
-        <h3 class="event-date"><%= dates[i].date %></h3>
-        <% for(let j = 0; j < dates[i].events.length; j++) { %>
-        <%- include('partials/card.ejs', {id:dates[i].events[j].id, event:dates[i].events[j]}) %>
-        <% } %>
-        <% } %>
+      <div id="event-container" class="event-container">
+
       </div>
     </div>
 
     <%- include('partials/footer.ejs') %>
 
+    <script src="./static/ejs.min.js"></script>
+    <script src="./static/cardpartial.js"></script>
     <script src="./static/script.js" charset="utf-8"></script>
   </body>
 </html>

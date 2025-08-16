@@ -8,21 +8,22 @@ const router = express.Router();
 router.post('/create', async (req, res) => {
   const data = req.body;
 
-    if (await Event.findOne({"id":data.id}).exec()) { //handles duplicate events
-      return res.status(409).json({ 'message': 'Duplicate events not allowed'})
-    }
+    //will live with duplicates for now
+    // if (await Event.findOne({"title":data.title, "startTime": data.startTime}).exec()) { //handles duplicate events
+    //   return res.status(409).json({ 'message': 'Duplicate events not allowed'})
+    // }
 
     try {
       Event.create({
-        "id": data.id,
-        "title": data.title,
-        "startTime": data.startTime,
-        "endTime": data.endTime,
-        "loc": data.loc,
-        "description": data.desc,
-        "tags": data.tags,
-        "image": data.img,
-        "email": data.email,
+        title: data.title,
+        start: data.startTime,
+        end: data.endTime,
+        loc: data.loc,
+        description: data.desc,
+        tags: data.tags,
+        image: data.img,
+        org: data.org,
+        email: data.email,
       });
 
       return res.status(201).json({ 'success': "New event created" });
@@ -42,15 +43,16 @@ router.get('/get/:eventId', async (req, res) => {
   }
 });
 
-// router.get('/getAll', async (req, res) => {
-//   const events = await Event.find().exec();
-      
-//   //need to connect to this with homepage and onload.
-//   //right now homepage loops through dates not events
-//   //maybe need helper method to convert formats from
-//   //{event1, event2, event3} into
-//   //today: {event1, event2}, tmmrw: {event3}
-// });
+//for loading more events just increment num
+router.get('/getevents/:startDate/:num', async (req, res) => { 
+  const events = await Event.find({
+    start: { $gt: new Date(req.params.startDate) },
+  })
+    .limit(parseInt(req.params.num))
+    .exec();
+
+  return res.json(events);
+});
 
 router.put('/update/:eventId', async (req, res) => {
   const event = await Event.findOne({"id":req.params.eventId}).exec();
@@ -58,17 +60,20 @@ router.put('/update/:eventId', async (req, res) => {
 
   if (event) {
     try {
-      Event.updateOne({"id":req.params.eventId}, {
-        "id": data.id,
-        "title": data.title,
-        "startTime": data.startTime,
-        "endTime": data.endTime,
-        "loc": data.loc,
-        "description": data.desc,
-        "tags": data.tags,
-        "image": data.img,
-        "email": data.email,
-      }).exec();
+      Event.updateOne(
+        { id: req.params.eventId },
+        {
+          title: data.title,
+          start: data.startTime,
+          end: data.endTime,
+          loc: data.loc,
+          description: data.desc,
+          tags: data.tags,
+          image: data.img,
+          org: data.org,
+          email: data.email,
+        },
+      ).exec();
 
       return res.status(201).json({ 'success': "Event updated" });
     } catch (err) {

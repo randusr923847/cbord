@@ -14,7 +14,7 @@ export default mongoose.model(
     end: { type: Date, default: '' },
     loc: { type: String, default: '' },
     desc: { type: String, default: '' },
-    tags: { type: [String], default: '' },
+    tags: { type: [String], default: [] },
     image: { type: String, default: '' },
     org: { type: String, default: '' },
     email: { type: String, default: '' },

@@ -1,6 +1,7 @@
 import express from 'express';
 // import mongoose from '../db'
 import Event from '../models/event';
+import { orderByDate } from '../helper/helper';
 
 
 const router = express.Router();
@@ -45,7 +46,7 @@ router.get('/get/:eventId', async (req, res) => {
 
 //for loading more events just increment num
 router.get('/getevents/:start/:num', async (req, res) => { 
-  const events = await Event.find({
+  let data = await Event.find({
     start: { $gt: new Date(req.params.start) },
     accepted: true
   })
@@ -53,7 +54,8 @@ router.get('/getevents/:start/:num', async (req, res) => {
     .sort({start: 1})
     .exec();
 
-  
+  let events = orderByDate(data);
+
   if (events) {
     return res.status(201).json(events);
   } else {

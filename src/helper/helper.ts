@@ -13,8 +13,12 @@ interface Event {
   email: string;
 }
 
+interface EventByDate {
+  [key: string]: Event[];
+}
+
 export function eventParser(data: Event): Event {
-  let event = {
+  let event: Event = {
     id: data.id,
     accepted: data.accepted,
     title: data.title,
@@ -29,8 +33,8 @@ export function eventParser(data: Event): Event {
     email: data.email
   };
 
-  const eventStart = new Date(dateString(new Date(data.start)));
-  const eventEnd = new Date(dateString(new Date(data.end)));
+  const eventStart = new Date(convertTZ(new Date(data.start)));
+  const eventEnd = new Date(convertTZ(new Date(data.end)));
 
   event.start = eventStart.toLocaleTimeString('en-US', {
     hour: 'numeric',
@@ -42,14 +46,59 @@ export function eventParser(data: Event): Event {
     minute: '2-digit',
   });
 
-  event.date = eventStart.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-  });
+  event.date = dateString(eventStart);
 
   return event;
 }
 
-function dateString(date: Date) {
+export function orderByDate(data: Event[]): EventByDate {
+  let events: EventByDate = {};
+
+  const today = new Date();
+  const tomorrow = new Date(new Date().setDate(today.getDate() + 1));
+  const todayDate = dateString(today);
+  const tomorrowDate = dateString(tomorrow);
+  let prevDay = '';
+
+  for (let i = 0; i < data.length; i++) {
+    let event = eventParser(data[i]);
+    let eventDate = event.date || '';
+
+    if (eventDate != prevDay) {
+      if (eventDate == todayDate) {
+        if (eventDate in events) {
+          events['Today'].push(event);
+        } else {
+          events['Today'] = [event];
+        }
+      } else if (eventDate == tomorrowDate) {
+        if (eventDate in events) {
+          events['Tomorrow'].push(event);
+        } else {
+          events['Tomorrow'] = [event];
+        }
+      } else {
+        if (eventDate in events) {
+          events[eventDate].push(event);
+        } else {
+          events[eventDate] = [event];
+        }
+      }
+
+      prevDay = eventDate;
+    }
+  }
+
+  return events;
+}
+
+function convertTZ(date: Date) {
   return date.toLocaleDateString('en-US', { timeZone: 'America/New_York' });
+}
+
+function dateString(date: Date) {
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+  })
 }

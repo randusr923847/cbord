@@ -1,10 +1,11 @@
-const cardpartial = `<div id="card-<%= event.id %>" class="card">
+const cardpartial = `
+<div id="card-<%= event.id %>" class="card">
   <div class="card-img">
-    <img src="./static/<%= event.image %>" alt="..." />
+    <img src="../static/images/<%= event.image %>" alt="..." />
   </div>
 
   <div class="card-body">
-    <p class="card-time"><%= event.time %></p>
+    <p class="card-time"><%= event.start %></p>
     <h2 class="card-title"><%= event.title %></h2>
     <p class="card-org">By <%= event.org %></p>
     <p class="card-loc">

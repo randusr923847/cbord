@@ -5,21 +5,18 @@ export default mongoose.model(
   'Event',
   new mongoose.Schema({
     id: {
-      type: 'UUID',
-      default: () => randomUUID()
+      type: String,
+      default: () => randomUUID().toString(),
     },
-    accepted: {
-      type: 'Boolean',
-      default: 0
-    },
-    title: String,
-    start: Date,
-    end: Date,
-    loc: String,
-    description: String,
-    tags: [String],
-    image: String,
-    org: String,
-    email: String,
+    accepted: { type: Boolean, default: 0 },
+    title: { type: String, default: '' },
+    start: { type: Date, default: '' },
+    end: { type: Date, default: '' },
+    loc: { type: String, default: '' },
+    desc: { type: String, default: '' },
+    tags: { type: [String], default: '' },
+    image: { type: String, default: '' },
+    org: { type: String, default: '' },
+    email: { type: String, default: '' },
   }),
 );

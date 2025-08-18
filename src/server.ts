@@ -4,13 +4,11 @@ import path from 'path';
 
 import config from './config';
 import eventRouter from './routes/event';
-// import mongoose from './db';
+import Event from './models/event';
+import { eventParser } from './helper/helper';
 
 const app = express();
 const PORT = config.server.port;
-
-// //mongo
-// console.log(mongoose.connection) //just checking
 
 // Middleware
 app.use(cors());
@@ -20,54 +18,24 @@ app.use('/static', express.static(path.join(__dirname, '/static')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
-// Test Data
-const dates = [
-  {
-    date: 'Today',
-    events: [
-      {
-        id: 1,
-        img: 'test_flier.jpg',
-        title: 'BGR Event',
-        org: 'Purdue',
-        loc: 'Boiler Park',
-        time: '4:00 PM',
-        tags: ['Food', 'Games', 'Music'],
-      },
-      {
-        id: 2,
-        img: 'test_flier2.jpg',
-        title: 'Philosophy Talk',
-        org: 'Socratic Club',
-        loc: 'ET 314',
-        time: '6:30 PM',
-        tags: ['Food', 'Academic'],
-      },
-    ],
-  },
-  {
-    date: 'Tomorrow',
-    events: [
-      {
-        id: 3,
-        img: 'test_flier3.jpg',
-        title: 'Vinyl Tasting',
-        org: 'Music Club',
-        loc: 'CC 450',
-        time: '9:30 AM',
-        tags: ['Food', 'Music', 'Art'],
-      },
-    ],
-  },
-];
-
 // Routes
 app.get('/', (req, res) => {
-  res.render('bord', { dates: dates });
+  res.render('bord');
 });
 
 app.get('/create', (req, res) => {
   res.render('create');
+});
+
+app.get('/event/:eventId', async (req, res) => {
+    const event = await Event.findOne({"id":req.params.eventId}).exec();
+        
+    if (event) {
+      res.render('event', { event: eventParser(event) });
+    }
+    else {
+      return res.status(404).json({'message': 'Event not found'}); //event not found
+    }
 });
 
 app.use('/api/event', eventRouter);

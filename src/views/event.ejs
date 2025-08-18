@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>College Event Website</title>
-    <link rel="icon" type="image/x-icon" href="./static/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="../static/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../static/style.css" />
-    <link rel="stylesheet" href="../static/event.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/event.css" />
   </head>
   <body>
     <!-- <%- include('partials/header.ejs') %> -->
@@ -20,11 +20,11 @@
     <div class="event-page">
       <div class="event-content">
         <div class="event-img">
-          <img src="../static/<%= event.img %>" alt="..." />
+          <img src="../static/images/<%= event.image %>" alt="..." />
         </div>
         <div class="event-info">
           <h1 class="event-title"><%= event.title %></h2>
-          <p class="event-time"><%= event.date %> at <%= event.startTime %> - <%= event.endTime %></p>
+          <p class="event-times"><%= event.date %> at <%= event.start %> - <%= event.end %></p>
           <p class="event-org"><%= event.org %></p>
           <p class="event-loc"><%= event.loc %></p>
           <div class="event-tags">

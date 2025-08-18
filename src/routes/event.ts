@@ -16,10 +16,10 @@ router.post('/create', async (req, res) => {
     try {
       Event.create({
         title: data.title,
-        start: data.startTime,
-        end: data.endTime,
+        start: data.start,
+        end: data.end,
         loc: data.loc,
-        description: data.desc,
+        desc: data.desc,
         tags: data.tags,
         image: data.img,
         org: data.org,
@@ -36,7 +36,7 @@ router.get('/get/:eventId', async (req, res) => {
   const event = await Event.findOne({"id":req.params.eventId}).exec();
       
   if (event) {
-    return res.render('event', {event: event}); //renders the event
+    return res.status(201).json(event);
   }
   else {
     return res.status(404).json({'message': 'Event not found'}); //event not found
@@ -44,14 +44,21 @@ router.get('/get/:eventId', async (req, res) => {
 });
 
 //for loading more events just increment num
-router.get('/getevents/:startDate/:num', async (req, res) => { 
+router.get('/getevents/:start/:num', async (req, res) => { 
   const events = await Event.find({
-    start: { $gt: new Date(req.params.startDate) },
+    start: { $gt: new Date(req.params.start) },
+    accepted: true
   })
     .limit(parseInt(req.params.num))
+    .sort({start: 1})
     .exec();
 
-  return res.json(events);
+  
+  if (events) {
+    return res.status(201).json(events);
+  } else {
+    return res.json({ message: 'No events found' }); //events not found
+  }
 });
 
 router.put('/update/:eventId', async (req, res) => {
@@ -64,10 +71,10 @@ router.put('/update/:eventId', async (req, res) => {
         { id: req.params.eventId },
         {
           title: data.title,
-          start: data.startTime,
-          end: data.endTime,
+          start: data.start,
+          end: data.end,
           loc: data.loc,
-          description: data.desc,
+          desc: data.desc,
           tags: data.tags,
           image: data.img,
           org: data.org,

@@ -59,6 +59,7 @@ hr {
 .footer a {
   color: var(--text);
   text-decoration: none;
+  margin: 0;
 }
 
 .event-page {

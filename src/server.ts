@@ -34,14 +34,15 @@ app.get('/event/:eventId', async (req, res) => {
       res.render('event', { event: eventParser(event) });
     }
     else {
-      return res.status(404).json({'message': 'Event not found'}); //event not found
+      res.render('404'); //event not found
     }
 });
 
 app.use('/api/event', eventRouter);
 
 app.use('/{*any}', (req, res) => {
-  res.status(404).json({ error: 'Not Found' });
+  res.render('404');
+  // res.status(404).json({ error: 'Not Found' });
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

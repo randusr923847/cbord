@@ -3,6 +3,7 @@ Adapted from: https://thehelpfultipper.com/custom-input-dropdown-with-html-css-a
 */
 
 const dropdowns = document.querySelectorAll('.dropdown-container');
+// const dropdownHeight = 200;
 
 dropdowns.forEach((dropdownCont) => {
   // variables
@@ -11,10 +12,18 @@ dropdowns.forEach((dropdownCont) => {
     dropdownList = dropdownCont.querySelector('.dropdown_wrapper'),
     listItems = dropdownCont.querySelectorAll('.options span');
 
-  console.log(listItems);
-
   // functions
+  const positionDropdown = () => {
+    let rect = input.getBoundingClientRect();
+    // let vh = window.innerHeight;
+
+    dropdownList.style.top = `${rect.bottom + 5}px`;
+    dropdownList.style.left = `${rect.left}px`;
+    dropdownList.style.width = `${rect.width}px`;
+  }
+
   const addActiveClass = () => {
+    positionDropdown();
     dropdown.classList.toggle('active');
     dropdownList.classList.toggle('active');
   };
@@ -25,6 +34,12 @@ dropdowns.forEach((dropdownCont) => {
     dropdownList.classList.remove('active');
   };
 
+  const updatePosition = () => {
+    if (dropdownList.classList.contains('active')) {
+      positionDropdown();
+    }
+  }
+
   input.addEventListener('focus', addActiveClass);
   input.addEventListener('blur', () => {
     setTimeout(rmvActiveClass, 250);
@@ -34,6 +49,9 @@ dropdowns.forEach((dropdownCont) => {
     dropdown.classList.add('active');
     dropdownList.classList.add('active');
   });
+
+  window.addEventListener('scroll', updatePosition);
+  window.addEventListener('resize', updatePosition);
 
   document.addEventListener('click', (e) => {
     // Check clicked outside of input
@@ -47,9 +65,10 @@ dropdowns.forEach((dropdownCont) => {
 
   listItems.forEach((item) => {
     item.addEventListener('click', (e) => {
-      console.log('test');
       let val = e.target.innerHTML;
       input.value = val;
+
+      input.dispatchEvent(new Event('input', { bubbles: true }));
     });
   });
 });

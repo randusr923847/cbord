@@ -1,0 +1,89 @@
+body {
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+}
+
+.event-page {
+  max-width: 700px;
+  width: 100%;
+  padding: 10px;
+  min-height: 100vh;
+}
+
+.event-content {
+  display: inline-block;
+  width: 100%;
+}
+
+.event-info {
+  width: 50%;
+  float: right;
+  padding-inline: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.event-img {
+  width: 50%;
+  float: left;
+  padding-inline: 1rem;
+  margin-top: 1rem;
+}
+
+.event-img img {
+  object-fit: cover;
+  border-radius: 10px;
+  /* aspect-ratio: 0.8; flyer sizing */
+  max-height: none;
+  width: 100%;
+}
+
+@media only screen and (max-width: 610px) {
+  .event-img  {
+    width: 100%;
+  }
+  .event-info {
+    width: 100%;
+  }
+}
+
+.event-org {
+  padding-bottom: 1rem;
+}
+
+.event-loc {
+  padding-bottom: 1rem;
+}
+
+.event-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  align-items: center;
+}
+
+.event-tags p {
+  background: rgba(var(--border-rgb), var(--tag-opacity));
+  border-radius: 1.2rem;
+  padding: 0.3rem 0.6rem;
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+.event-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.event-desc p {
+  white-space: pre-wrap;
+}

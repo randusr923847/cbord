@@ -4,6 +4,9 @@ import path from 'path';
 
 import config from './config';
 import eventRouter from './routes/event';
+import { create_data } from './helpers/consts';
+import { eventParser, EventObj } from './helpers/event';
+import Event from './models/event';
 // import mongoose from './db';
 
 const app = express();
@@ -11,7 +14,7 @@ const PORT = config.server.port;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit: '510kb'}));
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
 app.set('view engine', 'ejs');
@@ -24,7 +27,7 @@ const dates = [
     events: [
       {
         id: 1,
-        img: 'test_flier.jpg',
+        img: '/static/images/test_flier.jpg',
         title: 'BGR Event',
         org: 'Purdue',
         loc: 'Boiler Park',
@@ -33,7 +36,7 @@ const dates = [
       },
       {
         id: 2,
-        img: 'test_flier2.jpg',
+        img: '/static/images/test_flier2.jpg',
         title: 'Philosophy Talk',
         org: 'Socratic Club',
         loc: 'ET 314',
@@ -47,7 +50,7 @@ const dates = [
     events: [
       {
         id: 3,
-        img: 'test_flier3.jpg',
+        img: '/static/images/test_flier3.jpg',
         title: 'Vinyl Tasting',
         org: 'Music Club',
         loc: 'CC 450',
@@ -58,19 +61,36 @@ const dates = [
   },
 ];
 
+
 // Routes
 app.get('/', (req, res) => {
   res.render('bord', { dates: dates });
 });
 
 app.get('/create', (req, res) => {
-  res.render('create');
+  res.render('create', { data: create_data });
+});
+
+app.get('/event/:eventId', async (req, res) => {
+  const event = await Event.findOne({"id":req.params.eventId}).exec() as EventObj | null;
+
+  if (event) {
+    if (event.accepted) {
+      res.render('event', { event: eventParser(event) });
+    }
+    else {
+      res.render('pending', { id: event.id });
+    }
+  }
+  else {
+    res.render('404');
+  }
 });
 
 app.use('/api/event', eventRouter);
 
 app.use('/{*any}', (req, res) => {
-  res.status(404).json({ error: 'Not Found' });
+  res.render('404');
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

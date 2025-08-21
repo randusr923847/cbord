@@ -8,7 +8,7 @@
       placeholder="<%= dropdown.placeholder %>"
       autocomplete="off"
       tabindex="0"
-      readonly
+      <% if(dropdown.readonly) { %>readonly<% } %>
     />
   </div>
 

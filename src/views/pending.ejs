@@ -4,31 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>College Event Website</title>
-    <link rel="icon" type="image/x-icon" href="./static/images/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <style>
+      .pending {
+        margin-top: 2rem;
+        text-align: left;
+      }
+
+      .pending p {
+        margin-block: 1rem;
+      }
+    </style>
   </head>
   <body>
     <%- include('partials/header.ejs') %>
 
     <div class="container">
       <div class="event-container">
-        <% for(let i = 0; i < dates.length; i++) { %>
-        <h3 class="event-date"><%= dates[i].date %></h3>
-        <% for(let j = 0; j < dates[i].events.length; j++) { %>
-        <%- include('partials/card.ejs', {id:dates[i].events[j].id, event:dates[i].events[j]}) %>
-        <% } %>
-        <% } %>
+        <div class="pending">
+          <p>Thanks for submitting an event!<br>We're quickly reviewing it and will email you when it's approved.</p>
+          <p>When approved, it will be posted on the home page and on this link:<br><a href="/event/<%= id %>">https://campusbord.com/event/<%= id %></a></p>
+        </div>
       </div>
     </div>
 
     <%- include('partials/footer.ejs') %>
-
-    <script src="./static/js/script.js" charset="utf-8"></script>
   </body>
 </html>

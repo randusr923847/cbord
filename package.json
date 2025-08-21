@@ -10,7 +10,7 @@
     "start": "node ./dist/server.js",
     "dev": "ts-node-dev --respawn src/server.ts",
     "format": "prettier . --write",
-    "lint": "eslint src",
+    "lint": "eslint src --fix",
     "test": "npm run lint && npm run format",
     "buildw": "npm run cleanw && tsc && npm run copy-filesw",
     "cleanw": "if exist .\\dist rd /s /q .\\dist",
@@ -26,7 +26,8 @@
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "mongoose": "^8.17.0"
+    "mongoose": "^8.17.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",

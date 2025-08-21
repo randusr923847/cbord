@@ -1,0 +1,36 @@
+.tag {
+  background: var(--bgtone);
+  color: rgba(var(--text-rgb), 0.9);
+  border-radius: 1.2rem;
+  padding: 0.4rem 0.7rem;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin-top: 0.7rem;
+  margin-right: 0.3rem;
+  cursor: pointer;
+
+  box-shadow:
+    inset -1px 1px 1px rgba(200, 200, 200, 0.1),
+    0px 1px 3px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.08),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.06);
+}
+
+.tag:hover {
+  box-shadow: none;
+}
+
+.tag[aria-selected="true"] {
+  color: var(--text);
+  border: 1px solid var(--contrast);
+}
+
+.tag[disabled] {
+  pointer-events: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.tags-container {
+  width: 100%;
+}

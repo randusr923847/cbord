@@ -4,16 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Post Event</title>
-    <link rel="icon" type="image/x-icon" href="./static/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="./static/images/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./static/style.css" />
-    <link rel="stylesheet" href="./static/create.css" />
-    <link rel="stylesheet" href="./static/dropdown.css" />
+    <link rel="stylesheet" href="./static/css/style.css" />
+    <link rel="stylesheet" href="./static/css/create.css" />
+    <link rel="stylesheet" href="./static/css/dropdown.css" />
+    <link rel="stylesheet" href="./static/css/tags.css" />
   </head>
   <body>
     <div class="header">
@@ -22,6 +23,7 @@
 
     <div class="container">
       <div class="event-container">
+
         <div class="image-container">
           <img id="img-display" class="no-image" alt="" />
           <div class="file-input">
@@ -33,13 +35,18 @@
               tabindex="-1"
             />
             <label for="file" tabindex="-1">Upload Image</label>
+            <p id="image-error" class="error">Please upload an image less than 500kB.</p>
           </div>
         </div>
+
         <div class="form-container">
           <textarea
             class="event-name"
             id="title"
             placeholder="Event Name"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
           ></textarea>
 
           <div class="organizer">
@@ -48,21 +55,18 @@
               class="event-org"
               id="org"
               placeholder="Org Name"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
             ></textarea>
           </div>
 
           <%
-          // current datetime string in America/Chicago timezone
           let indy_datetime_str = new Date().toLocaleString("en-US", { timeZone: "America/Indianapolis" });
-          // create new Date object
           let date_indy = new Date(indy_datetime_str);
-          // year as (YYYY) format
           let year = date_indy.getFullYear();
-          // month as (MM) format
           let month = ("0" + (date_indy.getMonth() + 1)).slice(-2);
-          // date as (DD) format
           let date = ("0" + date_indy.getDate()).slice(-2);
-          // date time in YYYY-MM-DD format
           let min_date = year + "-" + month + "-" + date;
           %>
 
@@ -77,33 +81,91 @@
             />
           </div>
 
-          <% function generateTimeList() { const times = []; let id = 0; for
-          (let hour = 0; hour < 24; hour++) { for (let minute = 0; minute < 60;
-          minute += 30) { let displayHr = hour === 0 ? 12 : hour > 12 ? hour -
-          12 : hour; let displayMin = minute.toString().padStart(2, '0'); let
-          tod = hour < 12 ? 'AM' : 'PM'; times.push({ id: id++, val:
-          `${displayHr}:${displayMin} ${tod}` }); } } return times; } let
-          start_dd = { id: 'start-time', placeholder: "Time", options: { 'id':
-          'start_time_opts', els: generateTimeList(), }, }; let end_dd = { id:
-          'end-time', placeholder: "Time", options: { 'id': 'end_time_opts',
-          els: generateTimeList(), }, }; %>
-
           <div class="time">
-            <label for="<%= start_dd.id %>">Start</label>
-            <%- include('partials/dropdown.ejs', {dropdown: start_dd}) %>
+            <label for="<%= data.start_dd.id %>">Start</label>
+            <%- include('partials/dropdown.ejs', {dropdown: data.start_dd}) %>
           </div>
 
           <div class="time">
-            <label for="<%= end_dd.id %>">End</label>
-            <%- include('partials/dropdown.ejs', {dropdown: end_dd}) %>
+            <label for="<%= data.end_dd.id %>">End</label>
+            <%- include('partials/dropdown.ejs', {dropdown: data.end_dd}) %>
           </div>
+
+          <div class="loc">
+            <label for="<%= data.bldgs_dd.id %>">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-geo-alt"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"
+                />
+                <path
+                  d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                />
+              </svg>
+            </label>
+            <%- include('partials/dropdown.ejs', {dropdown: data.bldgs_dd}) %>
+          </div>
+          <input
+            type="text"
+            class="loc-room"
+            id="room"
+            placeholder="Room #/Details"
+          />
+
+          <div class="email">
+            <label for="email-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+              </svg>
+            </label>
+            <input
+              type="text"
+              class="email-input"
+              id="email-text"
+              placeholder="Your Email (not shared)"
+            />
+          </div>
+
+          <div class="desc">
+            <label for="desc-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-justify-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+              </svg>
+            </label>
+            <textarea
+              class="event-desc"
+              id="desc-text"
+              placeholder="Description (Optional)"
+            ></textarea>
+          </div>
+
+          <div class="tags">
+            <label for="tags-cont">Tags<br><small>(up to 3)</small></label>
+            <%- include('partials/tags.ejs', {tags: data.tags}) %>
+          </div>
+
+          <button id="submit" class="submit" disabled>Submit</button>
+          <p id="form-error" class="error">Something went wrong :(<br>Please try again.</p>
         </div>
+
       </div>
     </div>
 
     <%- include('partials/footer.ejs') %>
+    <script>
+      const time_conv_map = <%- JSON.stringify(data.time_conv_map) %>;
+      const FILE_LIMIT = parseInt(<%= data.file_limit %>);
+      const FORMAT_DATE = "<%= data.format_date %>";
+    </script>
 
-    <script src="./static/create.js" charset="utf-8"></script>
-    <script src="./static/dropdown.js" charset="utf-8"></script>
+    <script src="./static/js/tags.js" charset="utf-8"></script>
+    <script src="./static/js/create.js" charset="utf-8"></script>
+    <script src="./static/js/dropdown.js" charset="utf-8"></script>
   </body>
 </html>

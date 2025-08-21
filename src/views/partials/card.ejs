@@ -1,6 +1,6 @@
-<div id="card-<%= id %>" class="card">
+<div id="card-<%= id %>" class="card" onclick="window.open('/event/<%= event.id %>');">
   <div class="card-img">
-    <img src="./static/<%= event.img %>" alt="..." />
+    <img src="<%= event.img %>" alt="..." />
   </div>
 
   <div class="card-body">

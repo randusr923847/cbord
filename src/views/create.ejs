@@ -180,8 +180,8 @@
 
     <%- include('partials/footer.ejs') %>
     <script>
-      const time_conv_map = "<%- JSON.stringify(data.time_conv_map) %>";
-      const FILE_LIMIT = parseInt("<%= data.file_limit %>");
+      const time_conv_map = <%- JSON.stringify(data.time_conv_map) %>;
+      const FILE_LIMIT = parseInt(<%= data.file_limit %>);
       const FORMAT_DATE = "<%= data.format_date %>";
     </script>
 

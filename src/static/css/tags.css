@@ -9,10 +9,8 @@
   margin-right: 0.3rem;
   cursor: pointer;
 
-  box-shadow:
-    inset -1px 1px 1px rgba(200, 200, 200, 0.1),
-    0px 1px 3px -1px rgba(0, 0, 0, 0.1),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.08),
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.1),
+    0px 1px 3px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px 0px rgba(0, 0, 0, 0.08),
     0px 1px 8px 0px rgba(0, 0, 0, 0.06);
 }
 
@@ -20,7 +18,7 @@
   box-shadow: none;
 }
 
-.tag[aria-selected="true"] {
+.tag[aria-selected='true'] {
   color: var(--text);
   border: 1px solid var(--contrast);
 }

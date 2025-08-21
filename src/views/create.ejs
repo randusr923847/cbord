@@ -23,7 +23,6 @@
 
     <div class="container">
       <div class="event-container">
-
         <div class="image-container">
           <img id="img-display" class="no-image" alt="" />
           <div class="file-input">
@@ -35,7 +34,9 @@
               tabindex="-1"
             />
             <label for="file" tabindex="-1">Upload Image</label>
-            <p id="image-error" class="error">Please upload an image less than 500kB.</p>
+            <p id="image-error" class="error">
+              Please upload an image less than 500kB.
+            </p>
           </div>
         </div>
 
@@ -120,8 +121,17 @@
 
           <div class="email">
             <label for="email-text">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-envelope"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
+                />
               </svg>
             </label>
             <input
@@ -134,8 +144,18 @@
 
           <div class="desc">
             <label for="desc-text">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-justify-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-justify-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
+                />
               </svg>
             </label>
             <textarea
@@ -146,14 +166,15 @@
           </div>
 
           <div class="tags">
-            <label for="tags-cont">Tags<br><small>(up to 3)</small></label>
+            <label for="tags-cont">Tags<br /><small>(up to 3)</small></label>
             <%- include('partials/tags.ejs', {tags: data.tags}) %>
           </div>
 
           <button id="submit" class="submit" disabled>Submit</button>
-          <p id="form-error" class="error">Something went wrong :(<br>Please try again.</p>
+          <p id="form-error" class="error">
+            Something went wrong :(<br />Please try again.
+          </p>
         </div>
-
       </div>
     </div>
 

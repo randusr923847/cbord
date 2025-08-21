@@ -1,10 +1,10 @@
-var tags = Array.from(document.getElementById("tags-cont").children);
+var tags = Array.from(document.getElementById('tags-cont').children);
 var tag_arr = [];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function select(tag) {
-  if (tag.hasAttribute("aria-selected")) {
-    tag.removeAttribute("aria-selected");
+  if (tag.hasAttribute('aria-selected')) {
+    tag.removeAttribute('aria-selected');
 
     let ind = tag_arr.indexOf(tag.textContent);
 
@@ -15,9 +15,8 @@ function select(tag) {
     if (tag_arr.length < 3) {
       enableNonSelected();
     }
-  }
-  else {
-    tag.setAttribute("aria-selected", "true");
+  } else {
+    tag.setAttribute('aria-selected', 'true');
     tag_arr.push(tag.textContent);
 
     if (tag_arr.length == 3) {
@@ -28,16 +27,16 @@ function select(tag) {
 
 function disableNonSelected() {
   tags.forEach((tag) => {
-    if (!tag.hasAttribute("aria-selected")) {
-      tag.setAttribute("disabled", "");
+    if (!tag.hasAttribute('aria-selected')) {
+      tag.setAttribute('disabled', '');
     }
   });
 }
 
 function enableNonSelected() {
   tags.forEach((tag) => {
-    if (tag.hasAttribute("disabled")) {
-      tag.removeAttribute("disabled");
+    if (tag.hasAttribute('disabled')) {
+      tag.removeAttribute('disabled');
     }
   });
 }

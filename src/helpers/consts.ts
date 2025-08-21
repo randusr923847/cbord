@@ -1,90 +1,90 @@
 import { generateTimeList, timeMap } from './time';
 
 const FILE_LIMIT = 500 * 1024;
-const FORMAT_DATE = "2025-08-17T";
-const TZ = "America/Indianapolis";
+const FORMAT_DATE = '2025-08-17T';
+const TZ = 'America/Indianapolis';
 
 const buildings = [
   {
-    val: 'North Hall'
+    val: 'North Hall',
   },
   {
-    val: 'Lux'
+    val: 'Lux',
   },
   {
-    val: 'Campus Center'
+    val: 'Campus Center',
   },
   {
-    val: 'Boiler Park'
+    val: 'Boiler Park',
   },
   {
-    val: 'Tower'
+    val: 'Tower',
   },
   {
-    val: 'Library'
+    val: 'Library',
   },
   {
-    val: 'ET'
+    val: 'ET',
   },
   {
-    val: 'SL'
+    val: 'SL',
   },
   {
-    val: 'IO'
+    val: 'IO',
   },
   {
-    val: 'AD'
+    val: 'AD',
   },
   {
-    val: 'BS'
+    val: 'BS',
   },
   {
-    val: 'CA'
+    val: 'CA',
   },
   {
-    val: 'EL'
+    val: 'EL',
   },
   {
-    val: 'ES'
+    val: 'ES',
   },
   {
-    val: 'HR'
+    val: 'HR',
   },
   {
-    val: 'IF'
+    val: 'IF',
   },
   {
-    val: 'IH'
+    val: 'IH',
   },
   {
-    val: 'IP'
+    val: 'IP',
   },
   {
-    val: 'IT'
+    val: 'IT',
   },
   {
-    val: 'LD'
+    val: 'LD',
   },
   {
-    val: 'LE'
+    val: 'LE',
   },
   {
-    val: 'MT'
+    val: 'MT',
   },
   {
-    val: 'NU'
+    val: 'NU',
   },
   {
-    val: 'PE'
+    val: 'PE',
   },
   {
-    val: 'UC'
+    val: 'UC',
   },
   {
-    val: 'UH'
+    val: 'UH',
   },
   {
-    val: 'UL'
+    val: 'UL',
   },
 ];
 
@@ -95,42 +95,42 @@ const bldgs_dd = {
   options: {
     id: 'bldg_opts',
     els: buildings,
-  }
-}
+  },
+};
 
 const tags = [
-  "Purdue",
-  "IU",
-  "Social",
-  "Academic",
-  "Career",
-  "Cultural",
-  "Sport",
-  "Art",
-  "Music",
-  "Food",
-]
+  'Purdue',
+  'IU',
+  'Social',
+  'Academic',
+  'Career',
+  'Cultural',
+  'Sport',
+  'Art',
+  'Music',
+  'Food',
+];
 
 const times = generateTimeList();
 
 const start_dd = {
-    id: 'start-time',
-    placeholder: "Time",
-    readonly: true,
-    options: {
-        id: 'start_time_opts',
-        els: times,
-    },
+  id: 'start-time',
+  placeholder: 'Time',
+  readonly: true,
+  options: {
+    id: 'start_time_opts',
+    els: times,
+  },
 };
 
 const end_dd = {
-    id: 'end-time',
-    placeholder: "Time",
-    readonly: true,
-    options: {
-        id: 'end_time_opts',
-        els: times,
-    },
+  id: 'end-time',
+  placeholder: 'Time',
+  readonly: true,
+  options: {
+    id: 'end_time_opts',
+    els: times,
+  },
 };
 
 const create_data = {
@@ -141,6 +141,15 @@ const create_data = {
   time_conv_map: timeMap,
   file_limit: FILE_LIMIT,
   format_date: FORMAT_DATE,
-}
+};
 
-export { tags, start_dd, end_dd, bldgs_dd, FILE_LIMIT, FORMAT_DATE, TZ, create_data };
+export {
+  tags,
+  start_dd,
+  end_dd,
+  bldgs_dd,
+  FILE_LIMIT,
+  FORMAT_DATE,
+  TZ,
+  create_data,
+};

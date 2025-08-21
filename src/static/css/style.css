@@ -94,10 +94,8 @@ body {
   transition: box-shadow 0.2s ease-in-out;
   display: inline;
 
-  box-shadow:
-    inset -1px 1px 1px rgba(200, 200, 200, 0.2),
-    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2),
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14),
     0px 1px 14px 0px rgba(0, 0, 0, 0.12);
 }
 
@@ -174,10 +172,8 @@ body {
   padding: 0.5rem 1rem;
   width: fit-content;
 
-  box-shadow:
-    inset -1px 1px 1px rgba(200, 200, 200, 0.2),
-    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2),
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14),
     0px 1px 14px 0px rgba(0, 0, 0, 0.12);
 }
 
@@ -199,10 +195,8 @@ body {
 .card {
   background: var(--bgtone);
 
-  box-shadow:
-    inset -1px 1px 1px rgba(200, 200, 200, 0.2),
-    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2),
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14),
     0px 1px 14px 0px rgba(0, 0, 0, 0.12);
 
   border-radius: 10px;

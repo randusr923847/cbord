@@ -25,7 +25,9 @@
         <div class="event-info">
           <h1 class="event-title"><%= event.title %></h1>
           <p class="event-org">By <%= event.org %></p>
-          <p class="event-times"><%= event.date %> from <%= event.start %> - <%= event.end %></p>
+          <p class="event-times">
+            <%= event.date %> from <%= event.start %> - <%= event.end %>
+          </p>
 
           <p class="event-loc">
             <svg
@@ -54,7 +56,6 @@
             <p><%= event.desc %></p>
           </div>
         </div>
-
       </div>
     </div>
     <%- include('partials/footer.ejs') %>

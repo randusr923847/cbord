@@ -1,6 +1,6 @@
 <div id="tags-cont" class="tags-container">
-  <% for(var i = 0; i < tags.length; i++) { %>
-  <% let tag_id = tags[i].toLowerCase(); %>
+  <% for(var i = 0; i < tags.length; i++) { %> <% let tag_id =
+  tags[i].toLowerCase(); %>
   <p id="<%= tag_id %>" class="tag" onclick="select(this)"><%= tags[i] %></p>
   <% } %>
 </div>

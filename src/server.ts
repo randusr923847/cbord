@@ -14,7 +14,7 @@ const PORT = config.server.port;
 
 // Middleware
 app.use(cors());
-app.use(express.json({limit: '510kb'}));
+app.use(express.json({ limit: '510kb' }));
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
 app.set('view engine', 'ejs');
@@ -61,7 +61,6 @@ const dates = [
   },
 ];
 
-
 // Routes
 app.get('/', (req, res) => {
   res.render('bord', { dates: dates });
@@ -72,17 +71,17 @@ app.get('/create', (req, res) => {
 });
 
 app.get('/event/:eventId', async (req, res) => {
-  const event = await Event.findOne({"id":req.params.eventId}).exec() as EventObj | null;
+  const event = (await Event.findOne({
+    id: req.params.eventId,
+  }).exec()) as EventObj | null;
 
   if (event) {
     if (event.accepted) {
       res.render('event', { event: eventParser(event) });
-    }
-    else {
+    } else {
       res.render('pending', { id: event.id });
     }
-  }
-  else {
+  } else {
     res.render('404');
   }
 });

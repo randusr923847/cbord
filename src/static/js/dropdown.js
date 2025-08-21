@@ -20,7 +20,7 @@ dropdowns.forEach((dropdownCont) => {
     dropdownList.style.top = `${rect.bottom + 5}px`;
     dropdownList.style.left = `${rect.left}px`;
     dropdownList.style.width = `${rect.width}px`;
-  }
+  };
 
   const addActiveClass = () => {
     positionDropdown();
@@ -38,7 +38,7 @@ dropdowns.forEach((dropdownCont) => {
     if (dropdownList.classList.contains('active')) {
       positionDropdown();
     }
-  }
+  };
 
   input.addEventListener('focus', addActiveClass);
   input.addEventListener('blur', () => {

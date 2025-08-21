@@ -5,7 +5,7 @@
 
 const fileInput = document.getElementById('file');
 const fileDisplay = document.getElementById('img-display');
-const imgError = document.getElementById("image-error");
+const imgError = document.getElementById('image-error');
 
 const titleInput = document.getElementById('title');
 const orgInput = document.getElementById('org');
@@ -15,22 +15,22 @@ const roomInput = document.getElementById('room');
 const emailInput = document.getElementById('email-text');
 const descInput = document.getElementById('desc-text');
 
-const startTimeInput = document.getElementById("start-time");
-const endTimeInput = document.getElementById("end-time");
-const startTimeOpts = document.getElementById("start_time_opts");
+const startTimeInput = document.getElementById('start-time');
+const endTimeInput = document.getElementById('end-time');
+const startTimeOpts = document.getElementById('start_time_opts');
 const startTimes = Array.from(startTimeOpts.children);
-const endTimeOpts = document.getElementById("end_time_opts");
+const endTimeOpts = document.getElementById('end_time_opts');
 const endTimes = Array.from(endTimeOpts.children);
 
-const submit = document.getElementById("submit");
-const formError = document.getElementById("form-error");
+const submit = document.getElementById('submit');
+const formError = document.getElementById('form-error');
 
 window.onload = function () {
   titleInput.focus();
 };
 
 submit.onclick = async function () {
-  formError.style.display = "none";
+  formError.style.display = 'none';
   let data = {};
 
   data.title = titleInput.value;
@@ -45,39 +45,40 @@ submit.onclick = async function () {
   data.tags = tag_arr;
 
   if (fileInput.files.length > 0) {
-    let fileInfo = fileDisplay.src.split(",");
-    data.image_type = fileInfo[0].split(";")[0].split(":")[1];
+    let fileInfo = fileDisplay.src.split(',');
+    data.image_type = fileInfo[0].split(';')[0].split(':')[1];
     data.image = fileInfo[1];
   }
 
-  await fetch("/api/event/create", {
-          method: "POST",
-          mode: "same-origin",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data)
-        }).then(res => res.json())
-          .then((res) => {
-            console.log(res);
-            if (res.success) {
-              window.location.href = "/event/" + res.id;
-            } else {
-              formError.style.display = "block";
-            }
-          })
-          .catch((err) => {
-            formError.style.display = "block";
-            console.log(err);
-          });
-}
+  await fetch('/api/event/create', {
+    method: 'POST',
+    mode: 'same-origin',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      if (res.success) {
+        window.location.href = '/event/' + res.id;
+      } else {
+        formError.style.display = 'block';
+      }
+    })
+    .catch((err) => {
+      formError.style.display = 'block';
+      console.log(err);
+    });
+};
 
 fileInput.addEventListener('change', function (event) {
   let file = event.target.files[0];
 
   if (file && file.type.startsWith('image/') && file.size < FILE_LIMIT) {
-    imgError.style.display = "none";
+    imgError.style.display = 'none';
     let reader = new FileReader();
 
     reader.onload = function (e) {
@@ -87,12 +88,11 @@ fileInput.addEventListener('change', function (event) {
 
     reader.readAsDataURL(file);
     fileDisplay.classList.remove('no-image');
-  }
-  else {
-    imgError.style.display = "block";
-    fileDisplay.removeAttribute("src");
+  } else {
+    imgError.style.display = 'block';
+    fileDisplay.removeAttribute('src');
     fileDisplay.classList.add('no-image');
-    fileInput.value = "";
+    fileInput.value = '';
   }
 });
 
@@ -131,51 +131,63 @@ function resizeDesc() {
 
 function removeEndTimeDisables() {
   endTimes.forEach((end_time) => {
-    end_time.style.display = "block";
+    end_time.style.display = 'block';
   });
 }
 
 function removeStartTimeDisables() {
   startTimes.forEach((start_time) => {
-    start_time.style.display = "block";
+    start_time.style.display = 'block';
   });
 }
 
 startTimes.forEach((start_time) => {
-  start_time.addEventListener("click", function () {
+  start_time.addEventListener('click', function () {
     removeEndTimeDisables();
-    let min = (new Date(FORMAT_DATE + time_conv_map[start_time.textContent])).getTime();
-    let val = (new Date(FORMAT_DATE + time_conv_map[endTimeInput.value])).getTime();
+    let min = new Date(
+      FORMAT_DATE + time_conv_map[start_time.textContent],
+    ).getTime();
+    let val = new Date(
+      FORMAT_DATE + time_conv_map[endTimeInput.value],
+    ).getTime();
 
     if (val <= min) {
-      endTimeInput.value = "";
+      endTimeInput.value = '';
     }
 
     endTimes.forEach((end_time) => {
-      let curr = (new Date(FORMAT_DATE + time_conv_map[end_time.textContent])).getTime();
+      let curr = new Date(
+        FORMAT_DATE + time_conv_map[end_time.textContent],
+      ).getTime();
 
       if (curr <= min) {
-        end_time.style.display = "none";
+        end_time.style.display = 'none';
       }
     });
   });
 });
 
 endTimes.forEach((end_time) => {
-  end_time.addEventListener("click", function () {
+  end_time.addEventListener('click', function () {
     removeStartTimeDisables();
-    let max = (new Date(FORMAT_DATE + time_conv_map[end_time.textContent])).getTime();
-    let val = (new Date(FORMAT_DATE + time_conv_map[startTimeInput.value])).getTime();
+    let max = new Date(
+      FORMAT_DATE + time_conv_map[end_time.textContent],
+    ).getTime();
+    let val = new Date(
+      FORMAT_DATE + time_conv_map[startTimeInput.value],
+    ).getTime();
 
     if (val >= max) {
-      startTimeInput.value = "";
+      startTimeInput.value = '';
     }
 
     startTimes.forEach((start_time) => {
-      let curr = (new Date(FORMAT_DATE + time_conv_map[start_time.textContent])).getTime();
+      let curr = new Date(
+        FORMAT_DATE + time_conv_map[start_time.textContent],
+      ).getTime();
 
       if (curr >= max) {
-        start_time.style.display = "none";
+        start_time.style.display = 'none';
       }
     });
   });
@@ -191,8 +203,8 @@ function checkButton() {
     (bldgInput.value || roomInput.value) &&
     emailInput.value
   ) {
-    submit.removeAttribute("disabled");
+    submit.removeAttribute('disabled');
   } else {
-    submit.setAttribute("disabled", "");
+    submit.setAttribute('disabled', '');
   }
 }

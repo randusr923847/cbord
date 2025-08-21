@@ -12,8 +12,7 @@ router.post('/create', async (req, res) => {
   if (typeof obj === 'string') {
     console.log(`Event creation aborted because: ${obj}`);
     res.json({ success: false, reason: obj });
-  }
-  else {
+  } else {
     let id = uuid();
 
     while (await Event.exists({ id: id })) {
@@ -31,13 +30,15 @@ router.post('/create', async (req, res) => {
 
 // Adapted from https://stackoverflow.com/a/28440633
 router.get('/img/:eventId', async (req, res) => {
-  const event = await Event.findOne({"id":req.params.eventId}).exec() as EventObj | null;
+  const event = (await Event.findOne({
+    id: req.params.eventId,
+  }).exec()) as EventObj | null;
 
   if (event) {
     const data = event.image;
 
-    if (data.includes("|")) {
-      const dataArr = data.split("|");
+    if (data.includes('|')) {
+      const dataArr = data.split('|');
       const img = Buffer.from(dataArr[1], 'base64');
 
       res.writeHead(200, {
@@ -45,13 +46,11 @@ router.get('/img/:eventId', async (req, res) => {
         'Content-Length': img.length,
       });
       res.end(img);
-    }
-    else {
+    } else {
       res.redirect(data);
     }
-  }
-  else {
-    res.json({ success: false, reason: "404 not found" });
+  } else {
+    res.json({ success: false, reason: '404 not found' });
   }
 });
 

@@ -47,11 +47,11 @@ type EventByDate = Record<string, CliEvent[]>;
 
 export function validateCreateReq(body: CreateBody): EventObj | string {
   if (!body.title || !body.org) {
-    return "No title or org name";
+    return 'No title or org name';
   }
 
   if (!body.date || !body.start || !body.end) {
-    return "No date or start/end time";
+    return 'No date or start/end time';
   }
 
   const offset = getOffset(TZ);
@@ -59,55 +59,53 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
   const endDate = new Date(`${body.date}T${timeMap[body.end]}${offset}`);
 
   if (!startDate) {
-    return "Invalid start datetime";
+    return 'Invalid start datetime';
   }
 
   if (!endDate) {
-    return "Invalid end datetime";
+    return 'Invalid end datetime';
   }
 
   if (startDate >= endDate) {
-    return "Invalid times";
+    return 'Invalid times';
   }
 
   let tags: string[] = [];
 
   if (body.tags) {
-    tags = body.tags.filter(item => allowedTags.includes(item)).slice(0, 3);
+    tags = body.tags.filter((item) => allowedTags.includes(item)).slice(0, 3);
   }
 
   if (!body.bldg && !body.room) {
-    return "No location given";
+    return 'No location given';
   }
 
   let loc = body.bldg;
 
   if (loc && body.room) {
-    loc += " " + body.room;
-  }
-  else if (!loc) {
+    loc += ' ' + body.room;
+  } else if (!loc) {
     loc = body.room;
   }
 
-  let image = "";
+  let image = '';
 
   if (body.image) {
     if (!body.image_type) {
-      return "No image type";
+      return 'No image type';
     }
 
     if (body.image.length > FILE_LIMIT) {
-      return "Image too big";
+      return 'Image too big';
     }
 
-    image = body.image_type + "|" + body.image;
-  }
-  else {
-    image = "/static/images/test_flier.jpg";
+    image = body.image_type + '|' + body.image;
+  } else {
+    image = '/static/images/test_flier.jpg';
   }
 
   const ret: EventObj = {
-    id: "unset",
+    id: 'unset',
     accepted: false,
     title: body.title,
     org: body.org,
@@ -117,7 +115,7 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
     description: body.desc,
     tags: tags,
     email: body.email,
-    image: image
+    image: image,
   };
 
   return ret;
@@ -139,12 +137,11 @@ export function eventParser(data: EventObj): CliEvent {
 
   const date = dateString(eventStart);
 
-  let image = "";
+  let image = '';
 
-  if (data.image.includes("|")) {
+  if (data.image.includes('|')) {
     image = `/api/event/img/${data.id}`;
-  }
-  else {
+  } else {
     image = data.image;
   }
 
@@ -159,7 +156,7 @@ export function eventParser(data: EventObj): CliEvent {
     desc: data.description,
     tags: data.tags,
     image: image,
-  }
+  };
 
   return event;
 }
@@ -213,5 +210,5 @@ function dateString(date: Date) {
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
-  })
+  });
 }

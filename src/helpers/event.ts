@@ -45,6 +45,16 @@ interface CliEvent {
 
 type EventByDate = Record<string, CliEvent[]>;
 
+function getImagePreset(tags: string[]): string {
+  const base = '/static/images/fliers/';
+
+  if (tags.length == 0) {
+    return base + 'default.png';
+  }
+
+  return base + tags[0].toLowerCase() + '.png';
+}
+
 export function validateCreateReq(body: CreateBody): EventObj | string {
   if (!body.title || !body.org) {
     return 'No title or org name';
@@ -101,7 +111,7 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
 
     image = body.image_type + '|' + body.image;
   } else {
-    image = '/static/images/test_flier.jpg';
+    image = getImagePreset(tags);
   }
 
   const ret: EventObj = {
@@ -122,19 +132,11 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
 }
 
 export function eventParser(data: EventObj): CliEvent {
-  const eventStart = new Date(convertTZ(new Date(data.startTime)));
-  const eventEnd = new Date(convertTZ(new Date(data.endTime)));
+  const eventStart = new Date(data.startTime);
+  const eventEnd = new Date(data.endTime);
 
-  const start = eventStart.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-  });
-
-  const end = eventEnd.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-  });
-
+  const start = toTZTimeString(eventStart);
+  const end = toTZTimeString(eventEnd);
   const date = dateString(eventStart);
 
   let image = '';
@@ -202,13 +204,18 @@ export function orderByDate(data: EventObj[]): EventByDate {
   return events;
 }
 
-function convertTZ(date: Date) {
-  return date.toLocaleDateString('en-US', { timeZone: TZ });
+function toTZTimeString(date: Date): string {
+  return date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: TZ,
+  });
 }
 
 function dateString(date: Date) {
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
+    timeZone: TZ,
   });
 }

@@ -2,6 +2,7 @@ interface Config {
   server: {
     port: number;
     domain: string;
+    log_level: string;
   };
   db: {
     database: string;

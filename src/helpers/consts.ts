@@ -99,16 +99,16 @@ const bldgs_dd = {
 };
 
 const tags = [
-  'Purdue',
-  'IU',
   'Social',
   'Academic',
   'Career',
   'Cultural',
+  'Food',
   'Sport',
   'Art',
   'Music',
-  'Food',
+  'Purdue',
+  'IU',
 ];
 
 const times = generateTimeList();

@@ -1,5 +1,8 @@
+NODE_ENV=development
+
 PORT=8000
 HOST=localhost
+LOG_LEVL=short
 
 DB_HOST=localhost
 DB_PORT=27017

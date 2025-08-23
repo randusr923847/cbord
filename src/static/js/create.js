@@ -3,6 +3,8 @@
 /*global FORMAT_DATE*/
 /*global time_conv_map*/
 
+const tagEls = Array.from(document.getElementById('tags-cont').children);
+
 const fileInput = document.getElementById('file');
 const fileDisplay = document.getElementById('img-display');
 const imgError = document.getElementById('image-error');
@@ -87,11 +89,11 @@ fileInput.addEventListener('change', function (event) {
     };
 
     reader.readAsDataURL(file);
-    fileDisplay.classList.remove('no-image');
+    // fileDisplay.classList.remove('no-image');
   } else {
     imgError.style.display = 'block';
-    fileDisplay.removeAttribute('src');
-    fileDisplay.classList.add('no-image');
+    // fileDisplay.removeAttribute('src');
+    // fileDisplay.classList.add('no-image');
     fileInput.value = '';
   }
 });
@@ -208,3 +210,20 @@ function checkButton() {
     submit.setAttribute('disabled', '');
   }
 }
+
+function updatePresetImage() {
+  if (!fileDisplay.getAttribute('src').includes('data:')) {
+    if (tag_arr.length == 0) {
+      fileDisplay.setAttribute('src', '/static/images/fliers/default.png');
+    } else {
+      fileDisplay.setAttribute(
+        'src',
+        `/static/images/fliers/${tag_arr[0].toLowerCase()}.png`,
+      );
+    }
+  }
+}
+
+tagEls.forEach((tag) => {
+  tag.addEventListener('click', updatePresetImage);
+});

@@ -24,7 +24,11 @@
     <div class="container">
       <div class="event-container">
         <div class="image-container">
-          <img id="img-display" class="no-image" alt="" />
+          <img
+            id="img-display"
+            src="/static/images/fliers/default.png"
+            alt=""
+          />
           <div class="file-input">
             <input
               type="file"
@@ -34,6 +38,9 @@
               tabindex="-1"
             />
             <label for="file" tabindex="-1">Upload Image</label>
+            <p class="hint">
+              (default image is based on the first tag you select)
+            </p>
             <p id="image-error" class="error">
               Please upload an image less than 500kB.
             </p>

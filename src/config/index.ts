@@ -7,6 +7,7 @@ const config: Config = {
   server: {
     port: parseInt(process.env.PORT as string),
     domain: process.env.HOST as string,
+    log_level: process.env.LOG_LEVEL as string,
   },
   db: {
     database: process.env.DB_NAME as string,

@@ -1,5 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
 import path from 'path';
 
 import config from './config';
@@ -14,6 +16,17 @@ const PORT = config.server.port;
 
 // Middleware
 app.use(cors());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrcAttr: ["'self'", "'unsafe-inline'"],
+      },
+    },
+  }),
+);
+app.use(morgan(config.server.log_level));
 app.use(express.json({ limit: '510kb' }));
 app.use('/static', express.static(path.join(__dirname, '/static')));
 

@@ -107,7 +107,7 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
       return 'No image type';
     }
 
-    if (body.image.length > FILE_LIMIT) {
+    if (body.image.length > FILE_LIMIT + 200 * 1024) {
       return 'Image too big';
     }
 
@@ -171,7 +171,7 @@ export function eventParser(data: EventObj, include_email = false): CliEvent {
 
 export async function getEvents(limit: number): Promise<EventByDate> {
   const data = await Event.find({
-    startTime: { $gt: Date.now() },
+    endTime: { $gt: Date.now() },
     accepted: 1,
   })
     .limit(limit)

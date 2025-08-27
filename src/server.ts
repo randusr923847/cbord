@@ -41,7 +41,7 @@ app.use(
   }),
 );
 app.use(morgan(config.server.log_level));
-app.use(express.json({ limit: '510kb' }));
+app.use(express.json({ limit: '1000kb' }));
 app.use(
   session({
     secret: config.server.session_secret,

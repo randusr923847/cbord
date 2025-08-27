@@ -107,7 +107,7 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
       return 'No image type';
     }
 
-    if (body.image.length > FILE_LIMIT + 200 * 1024) {
+    if (body.image.length > FILE_LIMIT + 500 * 1024) {
       return 'Image too big';
     }
 

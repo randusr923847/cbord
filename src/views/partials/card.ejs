@@ -4,11 +4,14 @@
   onclick="window.open('/event/<%= event.id %>');"
 >
   <div class="card-img">
-    <img src="<%= event.img %>" alt="..." />
+    <img src="<%= event.image %>" alt="..." />
   </div>
 
   <div class="card-body">
-    <p class="card-time"><%= event.time %></p>
+    <p class="card-time">
+      <%= full_time ? `${event.date} from ${event.start} - ${event.end}` :
+      event.start %>
+    </p>
     <h2 class="card-title"><%= event.title %></h2>
     <p class="card-org">By <%= event.org %></p>
     <p class="card-loc">
@@ -34,5 +37,14 @@
       <p><%= event.tags[i] %></p>
       <% } %>
     </div>
+    <% if (desc) { %>
+    <div class="event-desc">
+      <p><%= event.desc %></p>
+    </div>
+    <% } %>
+    <% if (event.email) { %>
+    <br /><br />
+    <p id="<%= id %>_em"><%= event.email %></p>
+    <% } %>
   </div>
 </div>

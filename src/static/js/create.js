@@ -195,6 +195,21 @@ endTimes.forEach((end_time) => {
   });
 });
 
+function isWhitespace(str) {
+  return !str.replace(/\s/g, '').length;
+}
+
+function checkEmail(email) {
+  return (
+    !isWhitespace(email) &&
+    email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+  );
+}
+
 function checkButton() {
   if (
     titleInput.value &&
@@ -203,7 +218,7 @@ function checkButton() {
     startTimeInput.value &&
     endTimeInput.value &&
     (bldgInput.value || roomInput.value) &&
-    emailInput.value
+    checkEmail(emailInput.value)
   ) {
     submit.removeAttribute('disabled');
   } else {
@@ -214,7 +229,7 @@ function checkButton() {
 function updatePresetImage() {
   if (!fileDisplay.getAttribute('src').includes('data:')) {
     if (tag_arr.length == 0) {
-      fileDisplay.setAttribute('src', '/static/images/fliers/default.png');
+      fileDisplay.setAttribute('src', '/static/images/fliers/social.png');
     } else {
       fileDisplay.setAttribute(
         'src',

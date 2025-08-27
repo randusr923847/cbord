@@ -1,5 +1,6 @@
 import { timeMap, getOffset } from './time';
 import { tags as allowedTags, FILE_LIMIT, TZ } from './consts';
+import Event from '../models/event';
 
 interface CreateBody {
   title: string;
@@ -18,7 +19,7 @@ interface CreateBody {
 
 export interface EventObj {
   id: string;
-  accepted: boolean;
+  accepted: number;
   title: string;
   org: string;
   startTime: number;
@@ -41,6 +42,7 @@ interface CliEvent {
   desc: string;
   tags: string[];
   image: string;
+  email?: string;
 }
 
 type EventByDate = Record<string, CliEvent[]>;
@@ -49,7 +51,7 @@ function getImagePreset(tags: string[]): string {
   const base = '/static/images/fliers/';
 
   if (tags.length == 0) {
-    return base + 'default.png';
+    return base + 'social.png';
   }
 
   return base + tags[0].toLowerCase() + '.png';
@@ -116,7 +118,7 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
 
   const ret: EventObj = {
     id: 'unset',
-    accepted: false,
+    accepted: 0,
     title: body.title,
     org: body.org,
     startTime: startDate.getTime(),
@@ -131,7 +133,7 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
   return ret;
 }
 
-export function eventParser(data: EventObj): CliEvent {
+export function eventParser(data: EventObj, include_email = false): CliEvent {
   const eventStart = new Date(data.startTime);
   const eventEnd = new Date(data.endTime);
 
@@ -160,7 +162,45 @@ export function eventParser(data: EventObj): CliEvent {
     image: image,
   };
 
+  if (include_email) {
+    event.email = data.email;
+  }
+
   return event;
+}
+
+export async function getEvents(limit: number): Promise<EventByDate> {
+  const data = await Event.find({
+    startTime: { $gt: Date.now() },
+    accepted: 1,
+  })
+    .limit(limit)
+    .sort({ startTime: 1 })
+    .exec();
+
+  console.log(data);
+
+  const events = orderByDate(data as EventObj[]);
+
+  return events;
+}
+
+export async function getAdminEvents(): Promise<CliEvent[]> {
+  const data = await Event.find({
+    startTime: { $gt: Date.now() },
+    accepted: 0,
+  })
+    .sort({ startTime: 1 })
+    .exec();
+
+  const events: CliEvent[] = [];
+
+  for (const datum of data) {
+    const event = eventParser(datum as EventObj, true);
+    events.push(event);
+  }
+
+  return events;
 }
 
 export function orderByDate(data: EventObj[]): EventByDate {
@@ -170,34 +210,21 @@ export function orderByDate(data: EventObj[]): EventByDate {
   const tomorrow = new Date(new Date().setDate(today.getDate() + 1));
   const todayDate = dateString(today);
   const tomorrowDate = dateString(tomorrow);
-  let prevDay = '';
 
   for (const datum of data) {
     const event = eventParser(datum);
-    const eventDate = event.date || '';
+    let eventDate = event.date;
 
-    if (eventDate != prevDay) {
-      if (eventDate == todayDate) {
-        if (eventDate in events) {
-          events['Today'].push(event);
-        } else {
-          events['Today'] = [event];
-        }
-      } else if (eventDate == tomorrowDate) {
-        if (eventDate in events) {
-          events['Tomorrow'].push(event);
-        } else {
-          events['Tomorrow'] = [event];
-        }
-      } else {
-        if (eventDate in events) {
-          events[eventDate].push(event);
-        } else {
-          events[eventDate] = [event];
-        }
-      }
+    if (eventDate == todayDate) {
+      eventDate = 'Today';
+    } else if (eventDate == tomorrowDate) {
+      eventDate = 'Tomorrow';
+    }
 
-      prevDay = eventDate;
+    if (eventDate in events) {
+      events[eventDate].push(event);
+    } else {
+      events[eventDate] = [event];
     }
   }
 

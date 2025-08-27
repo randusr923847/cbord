@@ -2,6 +2,7 @@ import express from 'express';
 import Event from '../models/event';
 import { validateCreateReq, EventObj } from '../helpers/event';
 import { v4 as uuid } from 'uuid';
+import '../types/session';
 
 const router = express.Router();
 router.use(express.json());
@@ -51,6 +52,24 @@ router.get('/img/:eventId', async (req, res) => {
     }
   } else {
     res.json({ success: false, reason: '404 not found' });
+  }
+});
+
+router.post('/accept', async (req, res) => {
+  if (req.session.auth && req.body.id) {
+    const result = await Event.updateOne({ id: req.body.id }, { accepted: 1 });
+    res.json({ success: result.modifiedCount == 1 });
+  } else {
+    res.json({ success: false });
+  }
+});
+
+router.post('/reject', async (req, res) => {
+  if (req.session.auth && req.body.id) {
+    const result = await Event.updateOne({ id: req.body.id }, { accepted: -1 });
+    res.json({ success: result.modifiedCount == 1 });
+  } else {
+    res.json({ success: false });
   }
 });
 

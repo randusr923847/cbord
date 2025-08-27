@@ -4,31 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>College Event Website</title>
-    <link rel="icon" type="image/x-icon" href="./static/images/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./static/css/style.css" />
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
+    <link href="/static/font-files/montserrat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/style.css" />
   </head>
   <body>
     <%- include('partials/header.ejs') %>
 
     <div class="container">
       <div class="event-container">
-        <% for(let i = 0; i < dates.length; i++) { %>
-        <h3 class="event-date"><%= dates[i].date %></h3>
-        <% for(let j = 0; j < dates[i].events.length; j++) { %>
-        <%- include('partials/card.ejs', {id:dates[i].events[j].id, event:dates[i].events[j]}) %>
+        <% let dates_obj = Object.keys(dates); if (dates_obj.length == 0) { %>
+        <br /><br />
+        <h3>We couldn't find any events happening today :(</h3>
+        <h3>Be the first to submit one!</h3>
         <% } %>
-        <% } %>
+
+        <% dates_obj.forEach(date => { %>
+        <h3 class="event-date"><%= date %></h3>
+        <%
+          let events = dates[date];
+          for (let i = 0; i < events.length; i++) {
+        %>
+        <%- include('partials/card.ejs', {id:events[i].id, event:events[i], desc: false, full_time: false}) %>
+        <%
+          }
+        });
+        %>
       </div>
     </div>
 
     <%- include('partials/footer.ejs') %>
 
-    <script src="./static/js/script.js" charset="utf-8"></script>
+    <script src="/static/js/script.js" charset="utf-8"></script>
   </body>
 </html>

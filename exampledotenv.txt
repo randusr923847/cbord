@@ -1,11 +1,19 @@
 NODE_ENV=development
 
+EMAIL=email@example.com
+
 PORT=8000
-HOST=localhost
+HOST=https://localhost:8000
 LOG_LEVL=short
+SESSION_SECRET=some_secure_random_string
 
 DB_HOST=localhost
 DB_PORT=27017
 DB_NAME=bord
 DB_USER=bord_admin
 DB_PW=database_password
+
+# These are the localhost public dev credentials form MystAuth
+MYST_AUTH_ID=3e9a6fe7-59f6-4d50-aba0-af5ab5ebb508
+MYST_AUTH_KEY=da8120ad1d08b93a4ec575de94c115171c53b5bbc2c0360cea6c10feb286296563a0a263c4e0a826e3b7c60c6750980d746cde1432d52b5e8c1225fee897ac56
+MYST_AUTH_RID=a10d1520c91348db99f55a3411befab0

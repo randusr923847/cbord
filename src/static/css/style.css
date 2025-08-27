@@ -12,6 +12,7 @@
   --btn-txt: #f0efea;
   --error: #b73232;
   --tag-opacity: 0.4;
+  --success: #3c934a;
 }
 
 [color-theme='light'] {
@@ -47,7 +48,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', arial;
   font-weight: normal;
 }
 
@@ -293,6 +294,17 @@ body {
   .card-tags p {
     font-size: 0.65rem;
   }
+}
+
+.event-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.event-desc p {
+  white-space: pre-wrap;
 }
 
 .contrast-underline {

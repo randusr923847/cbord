@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
+    <title>Bord Admin</title>
+    <link href="/static/font-files/montserrat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/admin.css" />
+
+    <script>
+      /*to prevent Firefox FOUC, this must be here*/
+      let FF_FOUC_FIX;
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="right" onclick="logout()">Log Out</a>
+    </div>
+    <br /><br />
+    <div class="container">
+      <div class="event-container">
+        <% if (events.length == 0) { %>
+        <h1>No events to review.</h1>
+        <% } %>
+        <% for (let i = 0; i < events.length; i++) { %>
+        <div id="<%= events[i].id %>" class="card-cont">
+          <div
+            id="<%= events[i].id %>_rej"
+            name="rej-btn"
+            class="side-button rej"
+          >
+            <p>R</p>
+          </div>
+          <%- include('partials/card.ejs', { id: events[i].id, event: events[i], desc: true, full_time: true }) %>
+          <div
+            id="<%= events[i].id %>_acc"
+            name="acc-btn"
+            class="side-button acc"
+          >
+            <p>A</p>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <script>
+      const email = <%- JSON.stringify(site_email) %>;
+    </script>
+
+    <script src="/static/js/admin.js"></script>
+  </body>
+</html>

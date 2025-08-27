@@ -76,14 +76,3 @@ body {
   display: inline-block;
   margin-top: 0.2rem;
 }
-
-.event-desc {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-}
-
-.event-desc p {
-  white-space: pre-wrap;
-}

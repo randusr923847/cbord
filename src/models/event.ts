@@ -4,7 +4,7 @@ export default mongoose.model(
   'Event',
   new mongoose.Schema({
     id: { type: String },
-    accepted: { type: Boolean },
+    accepted: { type: Number },
     title: { type: String },
     org: { type: String },
     startTime: { type: Number },

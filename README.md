@@ -16,6 +16,7 @@ Run `npm run build` to build `/src` to `/dist`, and `npm start` to start the ser
 (On Windows, use `npm run buildw`)
 
 If you are using https locally, run these commands in root to add local certs:
+
 ```
 openssl req -x509 -newkey rsa:2048 -keyout keytmp.pem -out cert.pem -days 365
 openssl rsa -in keytmp.pem -out key.pem

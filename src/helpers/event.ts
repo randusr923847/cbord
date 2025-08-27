@@ -178,8 +178,6 @@ export async function getEvents(limit: number): Promise<EventByDate> {
     .sort({ startTime: 1 })
     .exec();
 
-  console.log(data);
-
   const events = orderByDate(data as EventObj[]);
 
   return events;

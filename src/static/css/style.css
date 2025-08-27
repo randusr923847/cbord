@@ -324,6 +324,7 @@ body {
 }
 
 .footer-el {
+  display: inline-block;
   padding-bottom: 1rem;
   color: var(--text);
   font-size: 0.8rem;

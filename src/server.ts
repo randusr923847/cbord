@@ -45,6 +45,7 @@ app.use(express.json({ limit: '510kb' }));
 app.use(
   session({
     secret: config.server.session_secret,
+    proxy: process.env.NODE_ENV == 'production',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -69,7 +70,6 @@ app.set('views', path.join(__dirname, '/views'));
 // Routes
 app.get('/', async (req, res) => {
   const dates = await getEvents(10);
-  console.log(dates);
   res.render('bord', { dates: dates });
 });
 
@@ -139,6 +139,7 @@ if (process.env.NODE_ENV == 'development') {
     console.log(`Server is running on port ${PORT}`);
   });
 } else {
+  app.set('trust proxy', true);
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });

@@ -33,7 +33,6 @@ function resizeImages() {
   });
 }
 
-window.addEventListener('load', resizeImages);
 window.addEventListener('resize', resizeImages);
 
 async function loadEvents(start, skip) {
@@ -72,6 +71,7 @@ async function loadEvents(start, skip) {
     console.log(err);
   }
 
+  resizeImages();
   loading_container.setAttribute('hidden', 'none');
 }
 

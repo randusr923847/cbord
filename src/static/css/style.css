@@ -337,6 +337,10 @@ body {
   font-size: 0.8rem;
 }
 
+.pad-right-23 {
+  padding-right: 23px;
+}
+
 a {
   color: var(--text);
 }

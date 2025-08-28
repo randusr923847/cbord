@@ -1,6 +1,7 @@
 import { generateTimeList, timeMap } from './time';
 
 const FILE_LIMIT = 500 * 1024;
+const EVENTS_PER_LOAD = 8;
 const FORMAT_DATE = '2025-08-17T';
 const TZ = 'America/Indianapolis';
 
@@ -149,6 +150,7 @@ export {
   end_dd,
   bldgs_dd,
   FILE_LIMIT,
+  EVENTS_PER_LOAD,
   FORMAT_DATE,
   TZ,
   create_data,

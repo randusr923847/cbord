@@ -1,6 +1,6 @@
 import express from 'express';
 import Event from '../models/event';
-import { validateCreateReq, EventObj } from '../helpers/event';
+import { validateCreateReq, orderByDate, EventObj } from '../helpers/event';
 import { v4 as uuid } from 'uuid';
 import '../types/session';
 
@@ -27,6 +27,26 @@ router.post('/create', async (req, res) => {
     console.log(`Event created with id: ${id}`);
     res.json({ success: true, id: id });
   }
+});
+
+router.post('/get/:start/:num/:skip', async (req, res) => {
+  const limit = parseInt(req.params.num);
+  const skip = parseInt(req.params.skip);
+
+  const data = await Event.find({
+    startTime: { $gt: new Date(parseInt(req.params.start)) },
+    endTime: { $gt: Date.now() },
+    accepted: 1,
+  })
+    .lean()
+    .sort({ startTime: 1 })
+    .skip(skip)
+    .limit(limit)
+    .exec();
+
+  const events = orderByDate(data as EventObj[]);
+
+  res.json({ success: true, events: events });
 });
 
 // Adapted from https://stackoverflow.com/a/28440633

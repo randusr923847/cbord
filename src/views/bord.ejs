@@ -12,29 +12,37 @@
     <%- include('partials/header.ejs') %>
 
     <div class="container">
-      <div class="event-container">
-        <% let dates_obj = Object.keys(dates); if (dates_obj.length == 0) { %>
-        <br /><br />
-        <h3>We couldn't find any events happening today :(</h3>
-        <h3>Be the first to submit one!</h3>
-        <% } %>
+      <div id="event-cont" class="event-container">
+        <div id="no-events-cont" hidden="none">
+          <br /><br />
+          <h3>We couldn't find any events happening today :(</h3>
+          <h3>Be the first to submit one!</h3>
+        </div>
+        <div id="error-cont" hidden="none">
+          <br /><br />
+          <h3>Something went wrong T-T</h3>
+          <h3>Please let us know so we can fix the issue.</h3>
+        </div>
+        <div id="net-error-cont" hidden="none">
+          <br /><br />
+          <h3>Network connection failed :(</h3>
+          <h3>Please check your connection and reload the page.</h3>
+        </div>
+      </div>
 
-        <% dates_obj.forEach(date => { %>
-        <h3 class="event-date"><%= date %></h3>
-        <%
-          let events = dates[date];
-          for (let i = 0; i < events.length; i++) {
-        %>
-        <%- include('partials/card.ejs', {id:events[i].id, event:events[i], desc: false, full_time: false}) %>
-        <%
-          }
-        });
-        %>
+      <div id="loading-cont" class="loading-container">
+        <p>Loading events ...</p>
       </div>
     </div>
 
     <%- include('partials/footer.ejs') %>
 
+    <script>
+      const EVENTS_PER_LOAD = parseInt(<%= events_per_load %>);
+    </script>
+
+    <script src="/static/js/ejs.min.js" charset="utf-8"></script>
+    <script src="/static/js/cardpartial.js" charset="utf-8"></script>
     <script src="/static/js/script.js" charset="utf-8"></script>
   </body>
 </html>

@@ -8,13 +8,8 @@ import path from 'path';
 
 import config from './config';
 import eventRouter from './routes/event';
-import { create_data } from './helpers/consts';
-import {
-  eventParser,
-  getAdminEvents,
-  getEvents,
-  EventObj,
-} from './helpers/event';
+import { create_data, EVENTS_PER_LOAD } from './helpers/consts';
+import { eventParser, getAdminEvents, EventObj } from './helpers/event';
 import { newState } from './helpers/crypto';
 import { verifyAuth } from './helpers/auth';
 import { checkMod } from './helpers/mod';
@@ -34,7 +29,7 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        scriptSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
       },
     },
@@ -69,8 +64,7 @@ app.set('views', path.join(__dirname, '/views'));
 
 // Routes
 app.get('/', async (req, res) => {
-  const dates = await getEvents(10);
-  res.render('bord', { dates: dates });
+  res.render('bord', { events_per_load: EVENTS_PER_LOAD });
 });
 
 app.get('/create', (req, res) => {

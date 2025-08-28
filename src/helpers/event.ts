@@ -174,8 +174,9 @@ export async function getEvents(limit: number): Promise<EventByDate> {
     endTime: { $gt: Date.now() },
     accepted: 1,
   })
-    .limit(limit)
+    .lean()
     .sort({ startTime: 1 })
+    .limit(limit)
     .exec();
 
   const events = orderByDate(data as EventObj[]);
@@ -188,6 +189,7 @@ export async function getAdminEvents(): Promise<CliEvent[]> {
     startTime: { $gt: Date.now() },
     accepted: 0,
   })
+    .lean()
     .sort({ startTime: 1 })
     .exec();
 
@@ -204,20 +206,9 @@ export async function getAdminEvents(): Promise<CliEvent[]> {
 export function orderByDate(data: EventObj[]): EventByDate {
   const events: EventByDate = {};
 
-  const today = new Date();
-  const tomorrow = new Date(new Date().setDate(today.getDate() + 1));
-  const todayDate = dateString(today);
-  const tomorrowDate = dateString(tomorrow);
-
   for (const datum of data) {
     const event = eventParser(datum);
-    let eventDate = event.date;
-
-    if (eventDate == todayDate) {
-      eventDate = 'Today';
-    } else if (eventDate == tomorrowDate) {
-      eventDate = 'Tomorrow';
-    }
+    const eventDate = event.date;
 
     if (eventDate in events) {
       events[eventDate].push(event);
@@ -238,6 +229,17 @@ function toTZTimeString(date: Date): string {
 }
 
 function dateString(date: Date) {
+  const curr = new Date().getFullYear();
+
+  if (curr != date.getFullYear()) {
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: TZ,
+    });
+  }
+
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',

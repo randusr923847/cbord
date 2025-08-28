@@ -11,6 +11,9 @@ export default tseslint.config(
   tseslint.configs.stylistic,
   prettierConfig,
   {
+    ignores: ['**/*.min.js'],
+  },
+  {
     files: ['src/static/**/*.js'],
     languageOptions: {
       ecmaVersion: 2022,

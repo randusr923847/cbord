@@ -10,6 +10,7 @@ import config from './config';
 import eventRouter from './routes/event';
 import { create_data, EVENTS_PER_LOAD } from './helpers/consts';
 import {
+  dateString,
   eventParser,
   getEvents,
   getAdminEvents,
@@ -70,7 +71,11 @@ app.set('views', path.join(__dirname, '/views'));
 // Routes
 app.get('/', async (req, res) => {
   const dates = await getEvents(EVENTS_PER_LOAD);
-  res.render('bord', { dates: dates, events_per_load: EVENTS_PER_LOAD });
+  res.render('bord', {
+    dates: dates,
+    events_per_load: EVENTS_PER_LOAD,
+    dateString: dateString,
+  });
 });
 
 app.get('/create', (req, res) => {

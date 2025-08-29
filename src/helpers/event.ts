@@ -228,7 +228,7 @@ function toTZTimeString(date: Date): string {
   });
 }
 
-function dateString(date: Date) {
+export function dateString(date: Date) {
   const curr = new Date().getFullYear();
 
   if (curr != date.getFullYear()) {

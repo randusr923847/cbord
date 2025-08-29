@@ -9,9 +9,11 @@ const error_cont = document.getElementById('error-cont');
 const net_error_cont = document.getElementById('net-error-cont');
 
 window.onload = async function () {
-  let time = Date.now();
-  await loadEvents(time, 0);
-  console.log(Date.now() - time);
+  resizeImages();
+
+  // let time = Date.now();
+  // await loadEvents(time, 0);
+  // console.log(Date.now() - time);
 };
 
 function resizeImages() {
@@ -35,7 +37,9 @@ function resizeImages() {
 
 window.addEventListener('resize', resizeImages);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function loadEvents(start, skip) {
+  loading_container.removeAttribute('hidden');
   let response = null;
 
   try {

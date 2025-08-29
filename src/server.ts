@@ -9,7 +9,12 @@ import path from 'path';
 import config from './config';
 import eventRouter from './routes/event';
 import { create_data, EVENTS_PER_LOAD } from './helpers/consts';
-import { eventParser, getAdminEvents, EventObj } from './helpers/event';
+import {
+  eventParser,
+  getEvents,
+  getAdminEvents,
+  EventObj,
+} from './helpers/event';
 import { newState } from './helpers/crypto';
 import { verifyAuth } from './helpers/auth';
 import { checkMod } from './helpers/mod';
@@ -64,7 +69,8 @@ app.set('views', path.join(__dirname, '/views'));
 
 // Routes
 app.get('/', async (req, res) => {
-  res.render('bord', { events_per_load: EVENTS_PER_LOAD });
+  const dates = await getEvents(EVENTS_PER_LOAD);
+  res.render('bord', { dates: dates, events_per_load: EVENTS_PER_LOAD });
 });
 
 app.get('/create', (req, res) => {

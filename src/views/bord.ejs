@@ -28,9 +28,25 @@
           <h3>Network connection failed :(</h3>
           <h3>Please check your connection and reload the page.</h3>
         </div>
+
+        <% if (dates) { let dates_obj = Object.keys(dates); if (dates_obj.length
+        == 0) {
+        document.getElementById("no-events-cont").removeAttribute("hidden"); }
+        dates_obj.forEach(date => { %>
+        <h3 class="event-date"><%= date %></h3>
+        <%
+          let events = dates[date];
+          for (let i = 0; i < events.length; i++) {
+        %>
+        <%- include('partials/card.ejs', {id:events[i].id, event:events[i], desc: false, full_time: false}) %>
+        <%
+            }
+          });
+        }
+        %>
       </div>
 
-      <div id="loading-cont" class="loading-container">
+      <div id="loading-cont" class="loading-container" hidden="none">
         <p>Loading events ...</p>
       </div>
     </div>

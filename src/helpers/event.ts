@@ -29,6 +29,7 @@ export interface EventObj {
   tags: string[];
   email: string;
   image: string;
+  submitTime: number;
 }
 
 interface CliEvent {
@@ -43,6 +44,7 @@ interface CliEvent {
   tags: string[];
   image: string;
   email?: string;
+  submitted?: string;
 }
 
 type EventByDate = Record<string, CliEvent[]>;
@@ -128,12 +130,17 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
     tags: tags,
     email: body.email,
     image: image,
+    submitTime: Date.now(),
   };
 
   return ret;
 }
 
-export function eventParser(data: EventObj, include_email = false): CliEvent {
+export function eventParser(
+  data: EventObj,
+  include_email = false,
+  include_submit_time = false,
+): CliEvent {
   const eventStart = new Date(data.startTime);
   const eventEnd = new Date(data.endTime);
 
@@ -166,6 +173,11 @@ export function eventParser(data: EventObj, include_email = false): CliEvent {
     event.email = data.email;
   }
 
+  if (include_submit_time) {
+    const subDate = new Date(data.submitTime);
+    event.submitted = dateString(subDate) + ' ' + toTZTimeString(subDate);
+  }
+
   return event;
 }
 
@@ -196,7 +208,7 @@ export async function getAdminEvents(): Promise<CliEvent[]> {
   const events: CliEvent[] = [];
 
   for (const datum of data) {
-    const event = eventParser(datum as EventObj, true);
+    const event = eventParser(datum as EventObj, true, true);
     events.push(event);
   }
 

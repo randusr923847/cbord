@@ -12,6 +12,7 @@ const event = new mongoose.Schema({
   tags: { type: [String] },
   image: { type: String },
   email: { type: String },
+  submitTime: { type: Number },
 });
 
 event.index({ accepted: -1, startTime: 1, endTime: 1 });

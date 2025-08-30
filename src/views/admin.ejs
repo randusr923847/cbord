@@ -33,7 +33,7 @@
           >
             <p>R</p>
           </div>
-          <%- include('partials/card.ejs', { id: events[i].id, event: events[i], desc: true, full_time: true }) %>
+          <%- include('partials/card.ejs', { id: events[i].id, event: events[i], desc: true, full_time: true, submitted: true }) %>
           <div
             id="<%= events[i].id %>_acc"
             name="acc-btn"

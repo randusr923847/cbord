@@ -9,6 +9,8 @@
 
   <div class="card-body">
     <p class="card-time">
+      <% if (submitted) { %> Submitted <%= event.submitted %><br />
+      <% } %>
       <%= full_time ? `${event.date} from ${event.start} - ${event.end}` :
       event.start %>
     </p>

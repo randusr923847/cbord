@@ -32,11 +32,9 @@
         <% if (dates) { let dates_obj = Object.keys(dates); if (dates_obj.length
         == 0) { %>
         <script>
-          document.getElementById("no-events-cont").removeAttribute("hidden");
+          document.getElementById('no-events-cont').removeAttribute('hidden');
         </script>
-        <%
-        }
-        const today = new Date(); const tomorrow = new Date(new
+        <% } const today = new Date(); const tomorrow = new Date(new
         Date().setDate(today.getDate() + 1)); const todayDate =
         dateString(today); const tomorrowDate = dateString(tomorrow);
         dates_obj.forEach(date => { let eventDate = date; if (eventDate ==
@@ -47,7 +45,7 @@
           let events = dates[date];
           for (let i = 0; i < events.length; i++) {
         %>
-        <%- include('partials/card.ejs', {id:events[i].id, event:events[i], desc: false, full_time: false}) %>
+        <%- include('partials/card.ejs', {id:events[i].id, event:events[i], desc: false, full_time: false, submitted: false }) %>
         <%
             }
           });

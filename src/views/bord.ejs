@@ -30,8 +30,12 @@
         </div>
 
         <% if (dates) { let dates_obj = Object.keys(dates); if (dates_obj.length
-        == 0) {
-        document.getElementById("no-events-cont").removeAttribute("hidden"); }
+        == 0) { %>
+        <script>
+          document.getElementById("no-events-cont").removeAttribute("hidden");
+        </script>
+        <%
+        }
         const today = new Date(); const tomorrow = new Date(new
         Date().setDate(today.getDate() + 1)); const todayDate =
         dateString(today); const tomorrowDate = dateString(tomorrow);

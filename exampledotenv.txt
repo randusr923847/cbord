@@ -4,7 +4,7 @@ EMAIL=email@example.com
 
 PORT=8000
 HOST=https://localhost:8000
-LOG_LEVL=short
+LOG_LEVEL=short
 SESSION_SECRET=some_secure_random_string
 
 DB_HOST=localhost

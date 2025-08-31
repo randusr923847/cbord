@@ -12,8 +12,9 @@ To set up a local dev environment:
 
 Run `npm install` to install dependencies.
 
-Run `npm run build` to build [`/src`](/src) to `/dist`, and `npm start` to start the server.
-(On Windows, use `npm run buildw`)
+Run `npm run build` (`buildw` on Windows) to build [`/src`](/src) to `/dist`, and `npm start` to start the server.
+
+For development, you can just run `npm run dev` instead, which has live restarts.
 
 To use https for local development (required for admin page auth), run these commands in root to add local certs:
 

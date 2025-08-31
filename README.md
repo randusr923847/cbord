@@ -7,7 +7,7 @@ A simple site to show events happening on campus!
 To set up a local dev environment:
 
 - fork or clone the repo: `git clone https://github.com/randusr923847/cbord.git`
-- copy [`exampledotenv.txt`](/exampledotenv) into a `.env` file and change values as needed.
+- copy [`exampledotenv.txt`](/exampledotenv.txt) into a `.env` file and change values as needed.
 - p.s. use nvm to get node `v24.5.0` and npm `11.5.1`
 
 Run `npm install` to install dependencies.

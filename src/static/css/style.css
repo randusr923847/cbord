@@ -142,10 +142,12 @@ body {
 
 .sub-header button p {
   padding-right: 1rem;
+  color: var(--text);
 }
 
 .sub-header button svg {
   background-color: var(--btn);
+  color: var(--btn-txt);
   border-radius: 1.2rem 0px 0px 1.2rem;
 }
 

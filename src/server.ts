@@ -8,6 +8,7 @@ import path from 'path';
 
 import config from './config';
 import eventRouter from './routes/event';
+import notifRouter from './routes/notifs';
 import { create_data, EVENTS_PER_LOAD } from './helpers/consts';
 import {
   dateString,
@@ -78,6 +79,10 @@ app.get('/', async (req, res) => {
   });
 });
 
+app.get('/notifs', (req, res) => {
+  res.render('notif');
+});
+
 app.get('/create', (req, res) => {
   res.render('create', { data: create_data });
 });
@@ -123,6 +128,7 @@ app.post('/api/logout', (req, res) => {
 });
 
 app.use('/api/event', eventRouter);
+app.use('/api/notifs', notifRouter);
 
 app.use('/{*any}', (req, res) => {
   res.render('404');

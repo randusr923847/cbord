@@ -1,0 +1,82 @@
+.email-input {
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background-color: var(--bgtone);
+  color: var(--text);
+  width: 75%;
+  padding: 1rem;
+  padding-block: 0.8rem;
+  border-radius: 1rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: inline-block;
+  cursor: text;
+  margin-top: 1rem;
+
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2),
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+}
+
+.email-input:hover {
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2);
+}
+
+.submit {
+  background-color: var(--btn);
+  color: var(--btn-txt);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 1.2rem;
+  font-size: 1rem;
+  transition: box-shadow 0.2s ease-in-out;
+  display: inline-block;
+  margin-top: 1.5rem;
+  margin-inline: calc(5% / 4);
+  width: 35%;
+
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2),
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+}
+
+.submit:hover {
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2);
+}
+
+.submit:disabled {
+  background-color: var(--bgtone);
+  opacity: 0.7;
+  box-shadow: inset -1px 1px 1px rgba(200, 200, 200, 0.2);
+  pointer-events: none;
+}
+
+.notif-form {
+  margin-top: 2rem;
+}
+
+.notif-form p {
+  margin-block: 1rem;
+  text-align: left;
+  margin-left: calc(25% / 2);
+}
+
+.red {
+  background-color: rgba(var(--error-rgb), 0.9);
+}
+
+@media only screen and (max-width: 680px) {
+  .email-input {
+    width: 100%;
+  }
+
+  .notif-form p {
+    margin-left: calc(5% / 2);
+  }
+
+  .submit {
+    width: 45%;
+  }
+}

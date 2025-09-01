@@ -30,7 +30,7 @@ function resizeImages() {
         height += item.offsetHeight;
       });
 
-      cardImg.style.maxHeight = `calc(${height}px + 2rem)`;
+      cardImg.style.maxHeight = `calc(${height}px + 2.1rem)`;
     }
   });
 }

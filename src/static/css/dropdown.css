@@ -95,7 +95,18 @@ Adapted from: https://thehelpfultipper.com/custom-input-dropdown-with-html-css-a
 .options {
   overflow-y: auto;
   height: inherit;
+
+  /*
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  */
 }
+
+/*
+.options::-webkit-scrollbar {
+  display: none;
+}
+*/
 
 .options span {
   display: block;

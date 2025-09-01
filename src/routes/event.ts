@@ -5,7 +5,6 @@ import { v4 as uuid } from 'uuid';
 import '../types/session';
 
 const router = express.Router();
-router.use(express.json());
 
 router.post('/create', async (req, res) => {
   const obj = validateCreateReq(req.body);

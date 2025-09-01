@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notification Settings</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
+    <link href="/static/font-files/montserrat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/notif.css" />
+  </head>
+  <body>
+    <%- include('partials/header.ejs') %>
+
+    <div class="container">
+      <div class="event-container">
+        <div class="notif-form">
+          <p>
+            Subscribe to get weekly emails with event notifications.<br />We
+            promise not to spam.
+          </p>
+          <p>Change your notification settings:</p>
+          <input
+            type="text"
+            class="email-input"
+            id="email-text"
+            placeholder="Enter your email"
+          />
+          <div class="buttons-cont">
+            <button id="unsub" class="submit red" disabled>Unsubscribe</button>
+            <button id="sub" class="submit" disabled>Subscribe</button>
+          </div>
+          <br />
+          <p
+            id="success"
+            style="text-align: center; margin-inline: auto"
+            hidden="none"
+          >
+            Success, redirecting to home ...
+          </p>
+          <p
+            id="failure"
+            style="text-align: center; margin-inline: auto"
+            hidden="none"
+          >
+            Something went wrong T-T please contact us
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+    <script src="/static/js/notif.js" charset="utf-8"></script>
+  </body>
+</html>

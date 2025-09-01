@@ -29,6 +29,8 @@ const formError = document.getElementById('form-error');
 
 window.onload = function () {
   titleInput.focus();
+  resizeOrg();
+  resizeDesc();
 };
 
 submit.onclick = async function () {
@@ -110,7 +112,7 @@ orgInput.addEventListener('input', resizeOrg);
 window.addEventListener('resize', resizeOrg);
 
 function resizeOrg() {
-  orgInput.style.height = '52px';
+  orgInput.style.height = '53px';
   orgInput.style.height = orgInput.scrollHeight + 'px';
 }
 
@@ -127,8 +129,8 @@ descInput.addEventListener('input', resizeDesc);
 window.addEventListener('resize', resizeDesc);
 
 function resizeDesc() {
-  descInput.style.height = '52px';
-  descInput.style.height = descInput.scrollHeight + 'px';
+  descInput.style.height = '54px';
+  descInput.style.height = 1 + descInput.scrollHeight + 'px';
 }
 
 function removeEndTimeDisables() {

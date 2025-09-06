@@ -22,7 +22,7 @@ interface ScrapedBody {
   org: string;
   startTime: number;
   endTime: number;
-  loc: string
+  loc: string;
   email: string;
   desc: string;
   tags: string[];
@@ -152,12 +152,13 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
 export function validateScraperEvents(eventList: ScrapedBody[]): EventObj[] {
   const ret: EventObj[] = [];
 
-  eventList.forEach(event => {
-
+  eventList.forEach((event) => {
     let tags: string[] = [];
 
     if (event.tags) {
-      tags = event.tags.filter((item) => allowedTags.includes(item)).slice(0, 3);
+      tags = event.tags
+        .filter((item) => allowedTags.includes(item))
+        .slice(0, 3);
     }
 
     let image = '';
@@ -168,7 +169,7 @@ export function validateScraperEvents(eventList: ScrapedBody[]): EventObj[] {
       }
 
       if (event.image.length > FILE_LIMIT + 500 * 1024) {
-        console.log("Image too big");
+        console.log('Image too big');
         return 'Image too big';
       }
 
@@ -191,9 +192,9 @@ export function validateScraperEvents(eventList: ScrapedBody[]): EventObj[] {
       image: image,
       submitTime: Date.now(),
     });
-  })
+  });
 
-  return ret
+  return ret;
 }
 
 export function eventParser(

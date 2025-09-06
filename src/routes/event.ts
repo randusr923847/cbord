@@ -92,4 +92,13 @@ router.post('/reject', async (req, res) => {
   }
 });
 
+router.post('/hide', async (req, res) => {
+  if (req.session.auth && req.body.id) {
+    const result = await Event.updateOne({ id: req.body.id }, { accepted: 0 });
+    res.json({ success: result.modifiedCount == 1 });
+  } else {
+    res.json({ success: false });
+  }
+});
+
 export default router;

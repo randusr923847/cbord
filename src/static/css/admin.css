@@ -2,6 +2,10 @@ body {
   color: var(--text);
 }
 
+hr {
+  margin-block: 2rem;
+}
+
 .event-container {
   max-width: 1200px;
 }
@@ -48,6 +52,10 @@ body {
 
 .acc {
   background-color: var(--success);
+}
+
+.hid {
+  background-color: var(--warn);
 }
 
 .event-card {

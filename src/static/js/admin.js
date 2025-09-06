@@ -2,6 +2,7 @@
 
 var rejBtns = document.getElementsByName('rej-btn');
 var accBtns = document.getElementsByName('acc-btn');
+var hidBtns = document.getElementsByName('hid-btn');
 
 window.onload = function () {
   removeUrlParams();
@@ -16,6 +17,12 @@ rejBtns.forEach((e) => {
 accBtns.forEach((e) => {
   e.addEventListener('click', () => {
     accept(e.id.slice(0, -4));
+  });
+});
+
+hidBtns.forEach((e) => {
+  e.addEventListener('click', () => {
+    hide(e.id.slice(0, -4));
   });
 });
 
@@ -87,6 +94,29 @@ async function accept(id) {
       });
   } catch {
     console.log('Fetch accept: Something went wrong.');
+  }
+}
+
+async function hide(id) {
+  console.log('trying hide fetch');
+  try {
+    await fetch('/api/event/hide/', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id }),
+    })
+      .then((response) => response.json())
+      .then(async (data) => {
+        console.log(data);
+        if (data.success) {
+          document.getElementById(id).remove();
+        } else {
+          console.log('Hide API: Something went wrong!');
+        }
+      });
+  } catch {
+    console.log('Fetch hide: Something went wrong.');
   }
 }
 

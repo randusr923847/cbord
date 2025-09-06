@@ -196,8 +196,8 @@ export async function getEvents(limit: number): Promise<EventByDate> {
   return events;
 }
 
-export async function getAdminEvents(): Promise<CliEvent[]> {
-  const data = await Event.find({
+export async function getAdminEvents(): Promise<Record<string, CliEvent[]>> {
+  const toBeAccepted = await Event.find({
     startTime: { $gt: Date.now() },
     accepted: 0,
   })
@@ -205,14 +205,29 @@ export async function getAdminEvents(): Promise<CliEvent[]> {
     .sort({ startTime: 1 })
     .exec();
 
-  const events: CliEvent[] = [];
+  const tba_events: CliEvent[] = [];
 
-  for (const datum of data) {
+  for (const datum of toBeAccepted) {
     const event = eventParser(datum as EventObj, true, true);
-    events.push(event);
+    tba_events.push(event);
   }
 
-  return events;
+  const accepted = await Event.find({
+    endTime: { $gt: Date.now() },
+    accepted: 1,
+  })
+    .lean()
+    .sort({ startTime: 1 })
+    .exec();
+
+  const a_events: CliEvent[] = [];
+
+  for (const datum of accepted) {
+    const event = eventParser(datum as EventObj, true, true);
+    a_events.push(event);
+  }
+
+  return { tba: tba_events, a: a_events };
 }
 
 export function orderByDate(data: EventObj[]): EventByDate {

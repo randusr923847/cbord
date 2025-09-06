@@ -21,25 +21,51 @@
     <br /><br />
     <div class="container">
       <div class="event-container">
-        <% if (events.length == 0) { %>
+        <% if (events.tba.length == 0) { %>
         <h1>No events to review.</h1>
         <% } %>
-        <% for (let i = 0; i < events.length; i++) { %>
-        <div id="<%= events[i].id %>" class="card-cont">
+        <% for (let i = 0; i < events.tba.length; i++) { %>
+        <div id="<%= events.tba[i].id %>" class="card-cont">
           <div
-            id="<%= events[i].id %>_rej"
+            id="<%= events.tba[i].id %>_rej"
             name="rej-btn"
             class="side-button rej"
           >
             <p>R</p>
           </div>
-          <%- include('partials/card.ejs', { id: events[i].id, event: events[i], desc: true, full_time: true, submitted: true }) %>
+          <%- include('partials/card.ejs', { id: events.tba[i].id, event: events.tba[i], desc: true, full_time: true, submitted: true }) %>
           <div
-            id="<%= events[i].id %>_acc"
+            id="<%= events.tba[i].id %>_acc"
             name="acc-btn"
             class="side-button acc"
           >
             <p>A</p>
+          </div>
+        </div>
+        <% } %>
+
+        <hr />
+        <hr />
+
+        <% if (events.a.length == 0) { %>
+        <h1>No current accepted events.</h1>
+        <% } %>
+        <% for (let i = 0; i < events.a.length; i++) { %>
+        <div id="<%= events.a[i].id %>" class="card-cont">
+          <div
+            id="<%= events.a[i].id %>_rej"
+            name="rej-btn"
+            class="side-button rej"
+          >
+            <p>R</p>
+          </div>
+          <%- include('partials/card.ejs', { id: events.a[i].id, event: events.a[i], desc: true, full_time: true, submitted: true }) %>
+          <div
+            id="<%= events.a[i].id %>_hid"
+            name="hid-btn"
+            class="side-button hid"
+          >
+            <p>H</p>
           </div>
         </div>
         <% } %>

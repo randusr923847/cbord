@@ -17,6 +17,19 @@ interface CreateBody {
   image?: string;
 }
 
+interface ScrapedBody {
+  title: string;
+  org: string;
+  startTime: number;
+  endTime: number;
+  loc: string
+  email: string;
+  desc: string;
+  tags: string[];
+  imageType?: string;
+  image?: string;
+}
+
 export interface EventObj {
   id: string;
   accepted: number;
@@ -134,6 +147,53 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
   };
 
   return ret;
+}
+
+export function validateScraperEvents(eventList: ScrapedBody[]): EventObj[] {
+  const ret: EventObj[] = [];
+
+  eventList.forEach(event => {
+
+    let tags: string[] = [];
+
+    if (event.tags) {
+      tags = event.tags.filter((item) => allowedTags.includes(item)).slice(0, 3);
+    }
+
+    let image = '';
+
+    if (event.image) {
+      if (!event.imageType) {
+        return 'No image type';
+      }
+
+      if (event.image.length > FILE_LIMIT + 500 * 1024) {
+        console.log("Image too big");
+        return 'Image too big';
+      }
+
+      image = event.imageType + '|' + event.image;
+    } else {
+      image = getImagePreset(tags);
+    }
+
+    ret.push({
+      id: 'unset',
+      accepted: 0,
+      title: event.title,
+      org: event.org,
+      startTime: event.startTime,
+      endTime: event.endTime,
+      loc: event.loc,
+      description: event.desc,
+      tags: tags,
+      email: event.email,
+      image: image,
+      submitTime: Date.now(),
+    });
+  })
+
+  return ret
 }
 
 export function eventParser(

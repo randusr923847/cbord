@@ -1,8 +1,9 @@
 import express from 'express';
 import Event from '../models/event';
-import { validateCreateReq, orderByDate, EventObj } from '../helpers/event';
+import { validateCreateReq, orderByDate, EventObj, validateScraperEvents } from '../helpers/event';
 import { v4 as uuid } from 'uuid';
 import '../types/session';
+import { hash } from 'crypto';
 
 const router = express.Router();
 
@@ -27,6 +28,30 @@ router.post('/create', async (req, res) => {
     res.json({ success: true, id: id });
   }
 });
+
+router.post('/scrape', async (req, res) => {
+  const events = validateScraperEvents(req.body.events);
+
+  events.forEach(async event => {
+    let id = `${event.title}${event.startTime}${event.endTime}${event.loc}`;
+    id = hash('sha256', id);
+
+    if (await Event.exists({ id: id })) {
+      console.log(`Duplicate event with id: ${id}`);
+      return 'Duplicate event'
+    }
+
+    event.id = id;
+
+    await Event.create(event);
+
+    console.log(`Event created with id: ${id}`);
+  }) 
+
+  if (events) {
+    res.json({ success: true });
+  }
+})
 
 router.post('/get/:start/:num/:skip', async (req, res) => {
   const limit = parseInt(req.params.num);

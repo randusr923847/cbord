@@ -393,3 +393,7 @@ body {
 a {
   color: var(--text);
 }
+
+#no-events-cont, #error-cont, #net-error-cont {
+  padding-top: 2rem;
+}

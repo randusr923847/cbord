@@ -19,10 +19,10 @@ const buildings = [
     val: 'Boiler Park',
   },
   {
-    val: 'Tower',
+    val: 'Library',
   },
   {
-    val: 'Library',
+    val: 'Student Center',
   },
   {
     val: 'ET',
@@ -32,6 +32,15 @@ const buildings = [
   },
   {
     val: 'IO',
+  },
+  {
+    val: 'IT',
+  },
+  {
+    val: 'STT',
+  },
+  {
+    val: 'Tower',
   },
   {
     val: 'AD',
@@ -59,9 +68,6 @@ const buildings = [
   },
   {
     val: 'IP',
-  },
-  {
-    val: 'IT',
   },
   {
     val: 'LD',

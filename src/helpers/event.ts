@@ -151,6 +151,11 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
   return ret;
 }
 
+/*
+ * Batch upload events, returns statuses for each event.
+ * Status has id if successful, otherwise starts with "Denied:"
+ * and ends with ".""
+ */
 export async function validateUploadEvents(
   eventList: uploadBody[],
 ): Promise<[EventObj[], Record<number, string>]> {
@@ -167,51 +172,40 @@ export async function validateUploadEvents(
     }
 
     if (!event.title || !event.org) {
-      status[i] = 'Denied: No title or org name';
+      status[i] = 'Denied: No title or org name.';
       console.log('No title or org name');
       continue;
     }
 
     if (!event.startTime || !event.endTime) {
-      status[i] = 'Denied: No start or end time';
+      status[i] = 'Denied: No start or end time.';
       console.log('Not start or end time');
       continue;
     }
 
     if (event.startTime >= event.endTime) {
-      status[i] = 'Denied: Start time is after end time';
+      status[i] = 'Denied: Start time is after end time.';
       console.log('Start time is after end time');
       continue;
     }
 
     if (!event.loc) {
-      status[i] = 'Denied: No location given';
+      status[i] = 'Denied: No location given.';
       console.log('No location given');
       continue;
     }
-
-    let id = `${event.title}${event.startTime}${event.endTime}${event.loc}${event.org}`;
-    id = hash('sha256', id);
-
-    if (await Event.exists({ id: id })) {
-      status[i] = `Denied: Duplicate event with id: ${id}`;
-      console.log(`Duplicate event with id: ${id}`);
-      continue;
-    }
-
-    event.id = id;
 
     let image = '';
 
     if (event.image) {
       if (!event.imageType) {
-        status[i] = 'Denied: No image type';
+        status[i] = 'Denied: No image type.';
         console.log('No image type');
         continue;
       }
 
       if (event.image.length > FILE_LIMIT + 500 * 1024) {
-        status[i] = 'Denied: Image too big';
+        status[i] = 'Denied: Image too big.';
         console.log('Image too big');
         continue;
       }
@@ -220,6 +214,17 @@ export async function validateUploadEvents(
     } else {
       image = getImagePreset(tags);
     }
+
+    let id = `${event.title}${event.startTime}${event.endTime}${event.loc}${event.org}`;
+    id = hash('sha256', id);
+
+    if (await Event.exists({ id: id })) {
+      status[i] = `Denied: Duplicate event with id: ${id}.`;
+      console.log(`Duplicate event with id: ${id}`);
+      continue;
+    }
+
+    event.id = id;
 
     ret.push({
       id: id,
@@ -236,10 +241,8 @@ export async function validateUploadEvents(
       submitTime: Date.now(),
     });
 
-    status[i] = `Accepted: Passed event with id: ${event.id}`;
+    status[i] = event.id;
   }
-
-  console.log(ret);
 
   return [ret, status];
 }

@@ -27,22 +27,26 @@ router.post('/create', async (req, res) => {
     obj.id = id;
 
     await Event.create(obj);
-
     console.log(`Event created with id: ${id}`);
+
     res.json({ success: true, id: id });
   }
 });
 
 router.post('/batch_upload', async (req, res) => {
-  const [events, status] = await validateUploadEvents(req.body.events);
-  console.log(status);
+  if (Object.prototype.hasOwnProperty.call(req.body, 'events')) {
+    const [events, status] = await validateUploadEvents(req.body.events);
+    console.log(`Event creation status: ${status}`);
 
-  events.forEach(async (event) => {
-    await Event.create(event);
-    console.log(`Event created with id: ${event.id}`);
-  });
+    events.forEach(async (event) => {
+      await Event.create(event);
+      console.log(`Event created with id: ${event.id}`);
+    });
 
-  res.json({ status });
+    res.json({ success: true, status: status });
+  } else {
+    res.json({ success: false, reason: 'No events provided!' });
+  }
 });
 
 router.post('/get/:start/:num/:skip', async (req, res) => {

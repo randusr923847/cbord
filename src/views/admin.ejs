@@ -52,14 +52,8 @@
         <% } %>
         <% for (let i = 0; i < events.a.length; i++) { %>
         <div id="<%= events.a[i].id %>" class="card-cont">
-          <div
-            id="<%= events.a[i].id %>_rej"
-            name="rej-btn"
-            class="side-button rej"
-          >
-            <p>R</p>
-          </div>
-          <%- include('partials/card.ejs', { id: events.a[i].id, event: events.a[i], desc: true, full_time: true, submitted: true }) %>
+          <%- include('partials/card.ejs', { id: events.a[i].id, event:
+          events.a[i], desc: true, full_time: true, submitted: true }) %>
           <div
             id="<%= events.a[i].id %>_hid"
             name="hid-btn"

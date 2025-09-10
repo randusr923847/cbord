@@ -1,6 +1,11 @@
 import express from 'express';
 import Event from '../models/event';
-import { validateCreateReq, orderByDate, EventObj } from '../helpers/event';
+import {
+  validateCreateReq,
+  orderByDate,
+  EventObj,
+  validateUploadEvents,
+} from '../helpers/event';
 import { v4 as uuid } from 'uuid';
 import '../types/session';
 
@@ -26,6 +31,18 @@ router.post('/create', async (req, res) => {
     console.log(`Event created with id: ${id}`);
     res.json({ success: true, id: id });
   }
+});
+
+router.post('/batch_upload', async (req, res) => {
+  const [events, status] = await validateUploadEvents(req.body.events);
+  console.log(status);
+
+  events.forEach(async (event) => {
+    await Event.create(event);
+    console.log(`Event created with id: ${event.id}`);
+  });
+
+  res.json({ status });
 });
 
 router.post('/get/:start/:num/:skip', async (req, res) => {

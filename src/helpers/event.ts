@@ -1,6 +1,7 @@
 import { timeMap, getOffset } from './time';
 import { tags as allowedTags, FILE_LIMIT, TZ } from './consts';
 import Event from '../models/event';
+import { hash } from 'crypto';
 
 interface CreateBody {
   title: string;
@@ -15,6 +16,20 @@ interface CreateBody {
   tags: string[];
   image_type?: string;
   image?: string;
+}
+
+interface uploadBody {
+  title: string;
+  org: string;
+  startTime: number;
+  endTime: number;
+  loc: string;
+  email: string;
+  desc: string;
+  tags: string[];
+  imageType?: string;
+  image?: string;
+  id?: string;
 }
 
 export interface EventObj {
@@ -134,6 +149,99 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
   };
 
   return ret;
+}
+
+export async function validateUploadEvents(
+  eventList: uploadBody[],
+): Promise<[EventObj[], Record<number, string>]> {
+  const ret: EventObj[] = [];
+  const status: Record<number, string> = {};
+
+  for (const [i, event] of eventList.entries()) {
+    let tags: string[] = [];
+
+    if (event.tags) {
+      tags = event.tags
+        .filter((item) => allowedTags.includes(item))
+        .slice(0, 3);
+    }
+
+    if (!event.title || !event.org) {
+      status[i] = 'Denied: No title or org name';
+      console.log('No title or org name');
+      continue;
+    }
+
+    if (!event.startTime || !event.endTime) {
+      status[i] = 'Denied: No start or end time';
+      console.log('Not start or end time');
+      continue;
+    }
+
+    if (event.startTime >= event.endTime) {
+      status[i] = 'Denied: Start time is after end time';
+      console.log('Start time is after end time');
+      continue;
+    }
+
+    if (!event.loc) {
+      status[i] = 'Denied: No location given';
+      console.log('No location given');
+      continue;
+    }
+
+    let id = `${event.title}${event.startTime}${event.endTime}${event.loc}${event.org}`;
+    id = hash('sha256', id);
+
+    if (await Event.exists({ id: id })) {
+      status[i] = `Denied: Duplicate event with id: ${id}`;
+      console.log(`Duplicate event with id: ${id}`);
+      continue;
+    }
+
+    event.id = id;
+
+    let image = '';
+
+    if (event.image) {
+      if (!event.imageType) {
+        status[i] = 'Denied: No image type';
+        console.log('No image type');
+        continue;
+      }
+
+      if (event.image.length > FILE_LIMIT + 500 * 1024) {
+        status[i] = 'Denied: Image too big';
+        console.log('Image too big');
+        continue;
+      }
+
+      image = event.imageType + '|' + event.image;
+    } else {
+      image = getImagePreset(tags);
+    }
+
+    ret.push({
+      id: id,
+      accepted: 0,
+      title: event.title,
+      org: event.org,
+      startTime: event.startTime,
+      endTime: event.endTime,
+      loc: event.loc,
+      description: event.desc,
+      tags: tags,
+      email: event.email,
+      image: image,
+      submitTime: Date.now(),
+    });
+
+    status[i] = `Accepted: Passed event with id: ${event.id}`;
+  }
+
+  console.log(ret);
+
+  return [ret, status];
 }
 
 export function eventParser(

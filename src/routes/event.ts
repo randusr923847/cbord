@@ -6,6 +6,7 @@ import {
   EventObj,
   validateUploadEvents,
 } from '../helpers/event';
+import { checkMod } from '../helpers/mod';
 import { v4 as uuid } from 'uuid';
 import '../types/session';
 
@@ -96,7 +97,11 @@ router.get('/img/:eventId', async (req, res) => {
 });
 
 router.post('/accept', async (req, res) => {
-  if (req.session.auth && req.body.id) {
+  if (
+    req.session.auth &&
+    req.body.id &&
+    (await checkMod(req.session.usr as string))
+  ) {
     const result = await Event.updateOne({ id: req.body.id }, { accepted: 1 });
     res.json({ success: result.modifiedCount == 1 });
   } else {
@@ -105,7 +110,11 @@ router.post('/accept', async (req, res) => {
 });
 
 router.post('/reject', async (req, res) => {
-  if (req.session.auth && req.body.id) {
+  if (
+    req.session.auth &&
+    req.body.id &&
+    (await checkMod(req.session.usr as string))
+  ) {
     const result = await Event.updateOne({ id: req.body.id }, { accepted: -1 });
     res.json({ success: result.modifiedCount == 1 });
   } else {

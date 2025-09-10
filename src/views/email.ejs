@@ -1,0 +1,44 @@
+<p style="margin: 0px">Here are some events happening this week on campus!</p>
+<p style="margin: 0px">
+  Learn more and post your own events on
+  <a href="https://campusbord.com">https://campusbord.com</a>.
+</p>
+<p style="margin: 0px">
+  Please email us if you have suggestions, feedback, or want to join the team!
+</p>
+<br />
+
+<%
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+%>
+
+<div style="text-align: center">
+  <% for (let i = 0; i < events.length; i++) { %>
+  <strong
+    ><a
+      href="https://campusbord.com/event/<%= events[i].id %>"
+      style="font-size: 1.2rem; color: black"
+      ><%= events[i].title %></a
+    ></strong
+  >
+  <p style="margin: 0px">by <%= events[i].org %> at <%= events[i].loc %></p>
+
+  <%
+    let day_of_week = "";
+
+    if (events[i].date.includes(",")) {
+      day_of_week = days[(new Date(events[i].date)).getDay()];
+    } else {
+      let dt = new Date(events[i].date + ", " + new Date().getFullYear());
+      day_of_week = days[dt.getDay()];
+    }
+  %>
+
+  <p style="margin: 0px">
+    <%= day_of_week %>, from <%= events[i].start %> - <%= events[i].end %>
+  </p>
+  <br />
+  <% } %>
+  <br />
+  <a href="https://campusbord.com/notifs"><small>Unsubscribe</small></a>
+</div>

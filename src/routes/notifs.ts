@@ -1,5 +1,6 @@
 import express from 'express';
 import Email from '../models/email';
+import { checkMod } from '../helpers/mod';
 import '../types/session';
 
 const router = express.Router();
@@ -28,7 +29,7 @@ router.post('/unsubscribe', async (req, res) => {
 });
 
 router.get('/list', async (req, res) => {
-  if (req.session.auth) {
+  if (req.session.auth && (await checkMod(req.session.usr as string))) {
     const data = await Email.find({}).lean();
     const list = data.map((o) => o.email);
     const out = list.join(',');

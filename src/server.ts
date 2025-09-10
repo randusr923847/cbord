@@ -14,6 +14,7 @@ import {
   dateString,
   eventParser,
   getEvents,
+  getEventsByTime,
   getAdminEvents,
   EventObj,
 } from './helpers/event';
@@ -77,6 +78,17 @@ app.get('/', async (req, res) => {
     events_per_load: EVENTS_PER_LOAD,
     dateString: dateString,
   });
+});
+
+app.get('/email_format', async (req, res) => {
+  if (req.session.auth && (await checkMod(req.session.usr as string))) {
+    const events = await getEventsByTime(Date.now() + 604800000);
+    res.render('email', {
+      events: events,
+    });
+  } else {
+    res.render('404');
+  }
 });
 
 app.get('/notifs', (req, res) => {

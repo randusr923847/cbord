@@ -257,7 +257,7 @@ export function eventParser(
 
   const start = toTZTimeString(eventStart);
   const end = toTZTimeString(eventEnd);
-  const date = dateString(eventStart);
+  const date = dateString(eventStart, true);
 
   let image = '';
 
@@ -385,10 +385,17 @@ function toTZTimeString(date: Date): string {
   });
 }
 
-export function dateString(date: Date) {
-  const curr = new Date().getFullYear();
+// Adapted from https://stackoverflow.com/a/40890488
+function isDateBeforeToday(date: Date, curr: Date): boolean {
+  return new Date(date.toDateString()) < new Date(curr.toDateString());
+}
 
-  if (curr != date.getFullYear()) {
+export function dateString(date: Date, max_now = false) {
+  const curr = new Date();
+
+  if (max_now && isDateBeforeToday(date, curr)) {
+    date = curr;
+  } else if (curr.getFullYear() != date.getFullYear()) {
     return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',

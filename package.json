@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && tsc && npm run copy-files",
+    "build": "npm run backup-dist && npm run clean && tsc && npm run copy-files",
+    "backup-dist": "backup_name=\"backup\"; counter=1; while [[ -e \"./${backup_name}.tar.gz\" ]]; do backup_name=\"backup$counter\"; ((counter++)); done; tar -czf \"${backup_name}.tar.gz\" -C . dist && echo \"Backup created: ${backup_name}.tar.gz\"",
     "clean": "rm -rf ./dist",
     "copy-files": "cp -r ./src/static ./src/views ./dist",
     "start": "node ./dist/server.js",

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Event</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
+    <link href="/static/font-files/montserrat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/create.css" />
+    <link rel="stylesheet" href="/static/css/dropdown.css" />
+    <link rel="stylesheet" href="/static/css/tags.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h2>Edit Event</h2>
+    </div>
+
+    <div class="container">
+      <div class="event-container">
+        <div class="image-container">
+          <img id="img-display" src="<%= event.image %>" alt="" />
+          <div class="file-input">
+            <input
+              type="file"
+              id="file"
+              class="file"
+              accept="image/png, image/jpeg"
+              tabindex="-1"
+            />
+            <label for="file" tabindex="-1">Upload Image</label>
+            <p class="hint">
+              (default image is based on the first tag you select)
+            </p>
+            <p id="image-error" class="error">
+              Please upload an image less than 500kB.
+            </p>
+          </div>
+        </div>
+
+        <div class="form-container">
+          <!-- prettier-ignore -->
+          <textarea
+            class="event-name"
+            id="title"
+            placeholder="Event Name"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          ><%= event.title %></textarea>
+
+          <div class="organizer">
+            <label for="org">By</label>
+            <textarea
+              class="event-org"
+              id="org"
+              placeholder="Org Name"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+            >
+<%= event.org %></textarea
+            >
+          </div>
+
+          <%
+          let indy_datetime_str = new Date().toLocaleString("en-US", { timeZone: "America/Indianapolis" });
+          let date_indy = new Date(indy_datetime_str);
+          let year = date_indy.getFullYear();
+          let month = ("0" + (date_indy.getMonth() + 1)).slice(-2);
+          let date = ("0" + date_indy.getDate()).slice(-2);
+          let min_date = year + "-" + month + "-" + date;
+          %>
+
+          <div class="date">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              class="form-date"
+              id="date"
+              onfocus="this.showPicker()"
+              min="<%= min_date %>"
+              value="<%= event.date %>"
+            />
+          </div>
+
+          <div class="time">
+            <label for="<%= data.start_dd.id %>">Start</label>
+            <%- include('partials/dropdown.ejs', {dropdown: data.start_dd}) %>
+          </div>
+
+          <div class="time">
+            <label for="<%= data.end_dd.id %>">End</label>
+            <%- include('partials/dropdown.ejs', {dropdown: data.end_dd}) %>
+          </div>
+
+          <div class="loc">
+            <label for="<%= data.bldgs_dd.id %>">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-geo-alt"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"
+                />
+                <path
+                  d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                />
+              </svg>
+            </label>
+            <%- include('partials/dropdown.ejs', {dropdown: data.bldgs_dd}) %>
+          </div>
+
+          <script>
+            document.getElementById('<%= data.start_dd.id %>').value =
+              '<%= event.start %>';
+            document.getElementById('<%= data.end_dd.id %>').value =
+              '<%= event.end %>';
+            document.getElementById('<%= data.bldgs_dd.id %>').value =
+              '<%= event.loc %>';
+          </script>
+
+          <input
+            type="text"
+            class="loc-room"
+            id="room"
+            placeholder="Room #/Details"
+          />
+
+          <div class="email">
+            <label for="email-text">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-envelope"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
+                />
+              </svg>
+            </label>
+            <input
+              type="text"
+              class="email-input"
+              id="email-text"
+              placeholder="Your Email (not shared)"
+              value="<%= event.email %>"
+            />
+          </div>
+
+          <div class="desc">
+            <label for="desc-text">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-justify-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
+                />
+              </svg>
+            </label>
+            <textarea
+              class="event-desc"
+              id="desc-text"
+              placeholder="Description (Optional)"
+            >
+<%= event.desc %></textarea
+            >
+          </div>
+
+          <div class="tags">
+            <label for="tags-cont">Tags<br /><small>(up to 3)</small></label>
+            <%- include('partials/tags.ejs', {tags: data.tags}) %>
+          </div>
+
+          <button id="submit" class="submit" disabled>Update</button>
+          <p id="form-error" class="error">
+            Something went wrong :(<br />Please try again.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+    <script>
+      const time_conv_map = <%- JSON.stringify(data.time_conv_map) %>;
+      const FILE_LIMIT = parseInt(<%= data.file_limit %>);
+      const FORMAT_DATE = "<%= data.format_date %>";
+      const ID = "<%= event.id %>";
+    </script>
+
+    <script src="/static/js/tags.js" charset="utf-8"></script>
+    <script>
+      <% for(let i = 0; i < event.tags.length; i++) { %>
+      document.getElementById("<%= event.tags[i] %>".toLowerCase()).setAttribute('aria-selected', 'true');
+      tag_arr.push("<%= event.tags[i] %>");
+
+      if (tag_arr.length == 3) {
+        disableNonSelected();
+      }
+      <% } %>
+    </script>
+    <script src="/static/js/edit.js" charset="utf-8"></script>
+    <script src="/static/js/dropdown.js" charset="utf-8"></script>
+  </body>
+</html>

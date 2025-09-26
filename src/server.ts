@@ -12,6 +12,7 @@ import notifRouter from './routes/notifs';
 import { create_data, EVENTS_PER_LOAD } from './helpers/consts';
 import {
   dateString,
+  hrDateToFormValue,
   eventParser,
   getEvents,
   getEventsByTime,
@@ -112,6 +113,33 @@ app.get('/event/:eventId', async (req, res) => {
     }
   } else {
     res.render('404');
+  }
+});
+
+app.get('/event/:eventId/edit', async (req, res) => {
+  if (await verifyAuth(req)) {
+    if (await checkMod(req.session.usr as string)) {
+      const event = (await Event.findOne({
+        id: req.params.eventId,
+      }).exec()) as EventObj | null;
+
+      if (event) {
+        const eventData = eventParser(event, true, false, true);
+        eventData.date = hrDateToFormValue(eventData.date);
+
+        res.render('edit', { event: eventData, data: create_data });
+      } else {
+        res.render('404');
+      }
+    } else {
+      res.render('404');
+    }
+  } else {
+    const state = newState();
+    req.session.state = state;
+    res.redirect(
+      `https://mystauth.com/auth/?rid=${config.auth.rid}&img=x-nVoti8RKw&state=${state}&ref=${config.server.domain}/admin/#login`,
+    );
   }
 });
 

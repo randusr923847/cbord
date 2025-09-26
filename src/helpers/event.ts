@@ -251,13 +251,14 @@ export function eventParser(
   data: EventObj,
   include_email = false,
   include_submit_time = false,
+  include_full_year = false,
 ): CliEvent {
   const eventStart = new Date(data.startTime);
   const eventEnd = new Date(data.endTime);
 
   const start = toTZTimeString(eventStart);
   const end = toTZTimeString(eventEnd);
-  const date = dateString(eventStart, true);
+  const date = dateString(eventStart, true, include_full_year);
 
   let image = '';
 
@@ -390,12 +391,14 @@ function isDateBeforeToday(date: Date, curr: Date): boolean {
   return new Date(date.toDateString()) < new Date(curr.toDateString());
 }
 
-export function dateString(date: Date, max_now = false) {
+export function dateString(date: Date, max_now = false, full_year = false) {
   const curr = new Date();
 
   if (max_now && isDateBeforeToday(date, curr)) {
     date = curr;
-  } else if (curr.getFullYear() != date.getFullYear()) {
+  }
+
+  if (curr.getFullYear() != date.getFullYear() || full_year) {
     return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
@@ -409,4 +412,12 @@ export function dateString(date: Date, max_now = false) {
     day: 'numeric',
     timeZone: TZ,
   });
+}
+
+export function hrDateToFormValue(date: string): string {
+  const date_obj = new Date(date);
+  const year = date_obj.getFullYear();
+  const month = ('0' + (date_obj.getMonth() + 1)).slice(-2);
+  const day = ('0' + date_obj.getDate()).slice(-2);
+  return year + '-' + month + '-' + day;
 }

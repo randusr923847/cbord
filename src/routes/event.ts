@@ -34,6 +34,28 @@ router.post('/create', async (req, res) => {
   }
 });
 
+router.post('/:id/edit', async (req, res) => {
+  const id = req.params.id;
+
+  if (req.session.auth && (await checkMod(req.session.usr as string))) {
+    const obj = validateCreateReq(req.body);
+
+    if (typeof obj === 'string') {
+      console.log(`Event creation aborted because: ${obj}`);
+      res.json({ success: false, reason: obj });
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: _, accepted: __, ...updatedObj } = obj;
+
+      const result = await Event.updateOne({ id: id }, updatedObj);
+      console.log(result);
+      res.json({ success: result.modifiedCount == 1 });
+    }
+  } else {
+    res.json({ success: false });
+  }
+});
+
 router.post('/batch_upload', async (req, res) => {
   if (Object.prototype.hasOwnProperty.call(req.body, 'events')) {
     const [events, status] = await validateUploadEvents(req.body.events);

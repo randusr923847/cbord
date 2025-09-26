@@ -38,7 +38,12 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          'ajax.cloudflare.com',
+        ],
         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
       },
     },

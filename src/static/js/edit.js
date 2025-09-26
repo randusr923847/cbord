@@ -30,6 +30,7 @@ const formError = document.getElementById('form-error');
 
 window.onload = function () {
   titleInput.focus();
+  resizeTitle();
   resizeOrg();
   resizeDesc();
   checkButton();

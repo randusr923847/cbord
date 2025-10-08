@@ -218,7 +218,7 @@ export async function validateUploadEvents(
     let id = `${event.title}${event.startTime}${event.endTime}${event.loc}${event.org}`;
     id = hash('sha256', id);
 
-    if (await Event.exists({ id: id, accepted: { $gte: 0 } })) {
+    if (await Event.exists({ id: id })) {
       status[i] = `Denied: Duplicate event with id: ${id}.`;
       console.log(`Duplicate event with id: ${id}`);
       continue;

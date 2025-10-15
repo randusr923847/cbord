@@ -6,6 +6,7 @@ import {
   EventObj,
   validateUploadEvents,
 } from '../helpers/event';
+import { countView } from '../helpers/analytics';
 import { checkMod } from '../helpers/mod';
 import { v4 as uuid } from 'uuid';
 import '../types/session';
@@ -13,6 +14,7 @@ import '../types/session';
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
+  countView(req, true);
   const obj = validateCreateReq(req.body);
 
   if (typeof obj === 'string') {
@@ -94,6 +96,7 @@ router.post('/get/:start/:num/:skip', async (req, res) => {
 
 // Adapted from https://stackoverflow.com/a/28440633
 router.get('/img/:eventId', async (req, res) => {
+  countView(req, true);
   const event = (await Event.findOne({
     id: req.params.eventId,
   }).exec()) as EventObj | null;

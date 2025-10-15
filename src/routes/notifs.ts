@@ -1,11 +1,13 @@
 import express from 'express';
 import Email from '../models/email';
 import { checkMod } from '../helpers/mod';
+import { countView } from '../helpers/analytics';
 import '../types/session';
 
 const router = express.Router();
 
 router.post('/subscribe', async (req, res) => {
+  countView(req, true);
   console.log(req.body.email);
   if (req.body.email) {
     await Email.findOneAndUpdate(
@@ -20,6 +22,7 @@ router.post('/subscribe', async (req, res) => {
 });
 
 router.post('/unsubscribe', async (req, res) => {
+  countView(req, true);
   if (req.body.email) {
     await Email.deleteOne({ email: req.body.email });
     res.json({ success: true });

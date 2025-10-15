@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run backup-dist && npm run clean && tsc && npm run copy-files",
-    "backup-dist": "backup_name=\"backup\"; counter=1; while [[ -e \"./${backup_name}.tar.gz\" ]]; do backup_name=\"backup$counter\"; ((counter++)); done; tar -czf \"${backup_name}.tar.gz\" -C . dist && echo \"Backup created: ${backup_name}.tar.gz\"",
+    "backup-dist": "bash -c 'backup_name=\"backup\"; counter=1; while [[ -e \"./${backup_name}.tar.gz\" ]]; do backup_name=\"backup$counter\"; ((counter++)); done; tar -czf \"${backup_name}.tar.gz\" -C . dist && echo \"Backup created: ${backup_name}.tar.gz\"'",
     "clean": "rm -rf ./dist",
     "copy-files": "cp -r ./src/static ./src/views ./dist",
     "start": "node ./dist/server.js",
@@ -30,6 +30,7 @@
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "helmet": "^8.1.0",
+    "ip-location-api": "^4.0.2",
     "mongoose": "^8.17.0",
     "morgan": "^1.10.1",
     "uuid": "^11.1.0"

@@ -1,6 +1,7 @@
 /*global EVENTS_PER_LOAD*/
 /*global ejs*/
 /*global card_partial*/
+/*global logView*/
 
 const events_container = document.getElementById('event-cont');
 const loading_container = document.getElementById('loading-cont');
@@ -10,6 +11,7 @@ const net_error_cont = document.getElementById('net-error-cont');
 
 window.onload = async function () {
   resizeImages();
+  logView();
 
   // let time = Date.now();
   // await loadEvents(time, 0);

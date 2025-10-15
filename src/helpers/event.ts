@@ -215,7 +215,9 @@ export async function validateUploadEvents(
       image = getImagePreset(tags);
     }
 
-    let id = `${event.title}${event.startTime}${event.endTime}${event.loc}${event.org}`;
+    let id = `${event.title}${event.startTime}${event.endTime}${event.loc}${
+      event.org
+    }${image.slice(20)}${image.slice(-20)}`;
     id = hash('sha256', id);
 
     if (await Event.exists({ id: id })) {

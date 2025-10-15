@@ -9,6 +9,7 @@ import path from 'path';
 import config from './config';
 import eventRouter from './routes/event';
 import notifRouter from './routes/notifs';
+import analyticsRouter from './routes/analytics';
 import { create_data, EVENTS_PER_LOAD } from './helpers/consts';
 import {
   dateString,
@@ -22,6 +23,7 @@ import {
 import { newState } from './helpers/crypto';
 import { verifyAuth } from './helpers/auth';
 import { checkMod } from './helpers/mod';
+import { trackRoute } from './helpers/analytics';
 import './types/session';
 import { clientPromise } from './db';
 import Event from './models/event';
@@ -78,6 +80,7 @@ app.set('views', path.join(__dirname, '/views'));
 
 // Routes
 app.get('/', async (req, res) => {
+  trackRoute(req);
   const dates = await getEvents(EVENTS_PER_LOAD);
   res.render('bord', {
     dates: dates,
@@ -98,14 +101,17 @@ app.get('/email_format', async (req, res) => {
 });
 
 app.get('/notifs', (req, res) => {
+  trackRoute(req);
   res.render('notif');
 });
 
 app.get('/create', (req, res) => {
+  trackRoute(req);
   res.render('create', { data: create_data });
 });
 
 app.get('/event/:eventId', async (req, res) => {
+  trackRoute(req);
   const event = (await Event.findOne({
     id: req.params.eventId,
   }).exec()) as EventObj | null;
@@ -174,6 +180,7 @@ app.post('/api/logout', (req, res) => {
 
 app.use('/api/event', eventRouter);
 app.use('/api/notifs', notifRouter);
+app.use('/api/view', analyticsRouter);
 
 app.use('/{*any}', (req, res) => {
   res.render('404');

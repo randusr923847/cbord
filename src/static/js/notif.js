@@ -1,3 +1,5 @@
+/*global logView*/
+
 const emailInput = document.getElementById('email-text');
 const sub = document.getElementById('sub');
 const unsub = document.getElementById('unsub');
@@ -5,6 +7,10 @@ const success = document.getElementById('success');
 const failure = document.getElementById('failure');
 
 emailInput.addEventListener('input', checkButton);
+
+window.onload = function () {
+  logView();
+};
 
 sub.onclick = async function () {
   let response;

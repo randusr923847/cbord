@@ -2,6 +2,7 @@
 /*global FILE_LIMIT*/
 /*global FORMAT_DATE*/
 /*global time_conv_map*/
+/*global logView*/
 
 const tagEls = Array.from(document.getElementById('tags-cont').children);
 
@@ -31,6 +32,7 @@ window.onload = function () {
   titleInput.focus();
   resizeOrg();
   resizeDesc();
+  logView();
 };
 
 submit.onclick = async function () {

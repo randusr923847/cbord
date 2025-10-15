@@ -52,15 +52,18 @@ export async function countView(req: Request, api = false): Promise<boolean> {
         req.headers['cf-connecting-ip'] ||
         req.headers['x-real-ip'] ||
         req.headers['x-forwarded-for'];
+
       let ip = 'na';
 
       if (!ips) {
         ip = req.connection.remoteAddress || ip;
+      } else if (typeof ips === 'string') {
+        ip = ips.split(',')[0].trim();
       } else {
         ip = ips[0].trim();
       }
 
-      console.log(ip);
+      console.log(`IP ADDR: ${ip}`);
 
       const iph = hash(ip);
       const ua = req.headers['user-agent'] || 'unknown';
@@ -70,11 +73,13 @@ export async function countView(req: Request, api = false): Promise<boolean> {
         const loc_data = await lookup(ip);
 
         if (loc_data) {
-          loc = `${loc_data.city || ':'}-${loc_data.region1_name || ':'}-${
-            loc_data.country || ':'
+          loc = `${loc_data.city || ''}-${loc_data.region1_name || ''}-${
+            loc_data.country || ''
           }`;
         }
       }
+
+      console.log(`LOC: ${loc}`);
 
       const sid = req.session.id;
       const tss = [curr_ts];

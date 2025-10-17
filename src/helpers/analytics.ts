@@ -2,6 +2,7 @@ import { Request } from 'express';
 import View from '../models/analytics';
 import { hash } from './crypto';
 import { lookup } from 'ip-location-api';
+import { TZ } from './consts';
 import '../types/session';
 
 interface ViewObject {
@@ -105,4 +106,65 @@ export async function countView(req: Request, api = false): Promise<boolean> {
   }
 
   return true;
+}
+
+function toDateTimeString(date: Date): string {
+  return date.toLocaleTimeString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: TZ,
+  });
+}
+
+function truncTime(time: number, bin: number): number {
+  return Math.floor(time / bin) * bin;
+}
+
+export async function getUniqueViewers(
+  min_time: number,
+  bin: number,
+): Promise<Record<string, number>> {
+  const data = await View.find().lean().sort({ 'tss.0': 1 }).exec();
+
+  const start = Math.max(data[0].tss[0], min_time);
+
+  let end = start;
+
+  for (const view of data) {
+    const last = view.tss.slice(-1)[0];
+    if (last > end) {
+      end = last;
+    }
+  }
+
+  const startTimeHr = truncTime(start, bin);
+  const endTimeHr = truncTime(end, bin);
+
+  const hours: Record<string, number> = {};
+
+  for (let t = startTimeHr; t <= endTimeHr; t += bin) {
+    const hr = toDateTimeString(new Date(t));
+    hours[hr] = 0;
+  }
+
+  for (const view of data) {
+    let last = '';
+    for (let i = 0; i < view.tss.length; i++) {
+      if (!view.page[i].includes('api')) {
+        const ts = view.tss[i];
+
+        if (ts >= min_time) {
+          const hr = toDateTimeString(new Date(truncTime(ts, bin)));
+          if (hr != last) {
+            hours[hr] += 1;
+            last = hr;
+          }
+        }
+      }
+    }
+  }
+
+  return hours;
 }

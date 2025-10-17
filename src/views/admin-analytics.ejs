@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
+    <title>Bord Admin</title>
+    <link href="/static/font-files/montserrat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/admin.css" />
+
+    <script>
+      /*to prevent Firefox FOUC, this must be here*/
+      let FF_FOUC_FIX;
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="right" onclick="logout()">Log Out</a>
+    </div>
+    <br /><br />
+    <div class="container">
+      <div class="event-container">
+        <div id="view-count"></div>
+      </div>
+    </div>
+
+    <script src="/static/js/plotly-3.1.0.min.js"></script>
+    <script>
+      const data = <%- JSON.stringify(uvs) %>;
+      const viewers = document.getElementById('view-count');
+      Plotly.newPlot(viewers, [{
+        x: Object.keys(data),
+        y: Object.values(data)
+      }], {
+        margin: {
+          b: 100,
+          r: 100,
+        },
+        title: {
+          text: 'Unique Visitors',
+        }
+      });
+
+      async function logout() {
+        await fetch('/api/logout/', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+        })
+          .then((response) => response.json())
+          .then(async (data) => {
+            console.log(data);
+            window.location.reload(true);
+          });
+      }
+    </script>
+  </body>
+</html>

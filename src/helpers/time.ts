@@ -117,4 +117,18 @@ const timeMap: { [index: string]: string } = {
   '12:30 PM': '12:30:00',
 };
 
-export { generateTimeList, timeReformat, getOffset, timeMap };
+const HOUR = 3600000;
+const DAY = 24 * HOUR;
+const WEEK = 7 * DAY;
+const MONTH = 4 * WEEK;
+
+export {
+  generateTimeList,
+  timeReformat,
+  getOffset,
+  timeMap,
+  HOUR,
+  DAY,
+  WEEK,
+  MONTH,
+};

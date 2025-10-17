@@ -23,7 +23,8 @@ import {
 import { newState } from './helpers/crypto';
 import { verifyAuth } from './helpers/auth';
 import { checkMod } from './helpers/mod';
-import { trackRoute } from './helpers/analytics';
+import { DAY, WEEK } from './helpers/time';
+import { trackRoute, getUniqueViewers } from './helpers/analytics';
 import './types/session';
 import { clientPromise } from './db';
 import Event from './models/event';
@@ -167,6 +168,24 @@ app.get('/admin', async (req, res) => {
     req.session.state = state;
     res.redirect(
       `https://mystauth.com/auth/?rid=${config.auth.rid}&img=x-nVoti8RKw&state=${state}&ref=${config.server.domain}/admin/#login`,
+    );
+  }
+});
+
+app.get('/admin/analytics', async (req, res) => {
+  if (await verifyAuth(req)) {
+    if (await checkMod(req.session.usr as string)) {
+      const time = Date.now() - 2 * WEEK;
+      const viewers = await getUniqueViewers(time, DAY);
+      res.render('admin-analytics', { uvs: viewers });
+    } else {
+      res.render('404');
+    }
+  } else {
+    const state = newState();
+    req.session.state = state;
+    res.redirect(
+      `https://mystauth.com/auth/?rid=${config.auth.rid}&img=x-nVoti8RKw&state=${state}&ref=${config.server.domain}/admin/analytics#login`,
     );
   }
 });

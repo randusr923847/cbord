@@ -1,7 +1,7 @@
 <p style="margin: 0px">Here are some events happening this week on campus!</p>
 <p style="margin: 0px">
   Learn more and post your own events on
-  <a href="https://campusbord.com">https://campusbord.com</a>.
+  <a href="https://campusbord.com/?ref=email">https://campusbord.com</a>.
 </p>
 <p style="margin: 0px">
   Please email us if you have suggestions, feedback, or want to join the team!
@@ -16,7 +16,7 @@
   <% for (let i = 0; i < events.length; i++) { %>
   <strong
     ><a
-      href="https://campusbord.com/event/<%= events[i].id %>"
+      href="https://campusbord.com/event/<%= events[i].id %>?ref=email"
       style="font-size: 1.2rem; color: black"
       ><%= events[i].title %></a
     ></strong
@@ -40,5 +40,7 @@
   <br />
   <% } %>
   <br />
-  <a href="https://campusbord.com/notifs"><small>Unsubscribe</small></a>
+  <a href="https://campusbord.com/notifs/?ref=email"
+    ><small>Unsubscribe</small></a
+  >
 </div>

@@ -246,3 +246,50 @@ function updatePresetImage() {
 tagEls.forEach((tag) => {
   tag.addEventListener('click', updatePresetImage);
 });
+
+// For use in submitting recurring events through console
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function submitManual() {
+  formError.style.display = 'none';
+  let data = {};
+
+  data.title = titleInput.value;
+  data.org = orgInput.value;
+  data.date = dateInput.value;
+  data.start = startTimeInput.value;
+  data.end = endTimeInput.value;
+  data.bldg = bldgInput.value;
+  data.room = roomInput.value;
+  data.email = emailInput.value;
+  data.desc = descInput.value;
+  data.tags = tag_arr;
+
+  if (fileInput.files.length > 0) {
+    let fileInfo = fileDisplay.src.split(',');
+    data.image_type = fileInfo[0].split(';')[0].split(':')[1];
+    data.image = fileInfo[1];
+  }
+
+  await fetch('/api/event/create', {
+    method: 'POST',
+    mode: 'same-origin',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      if (res.success) {
+        //window.location.href = '/event/' + res.id;
+      } else {
+        formError.style.display = 'block';
+      }
+    })
+    .catch((err) => {
+      formError.style.display = 'block';
+      console.log(err);
+    });
+}

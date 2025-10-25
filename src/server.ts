@@ -172,11 +172,12 @@ app.get('/admin', async (req, res) => {
   }
 });
 
-app.get('/admin/analytics{/:time}{/:bin}', async (req, res) => {
+app.get('/admin/analytics{/:time}{/:bin}{/:ii}', async (req, res) => {
   if (await verifyAuth(req)) {
     if (await checkMod(req.session.usr as string)) {
       let time = Date.now() - 2 * WEEK;
       let bin = DAY;
+      let no_img = true;
 
       if (req.params) {
         if (req.params.time) {
@@ -190,9 +191,13 @@ app.get('/admin/analytics{/:time}{/:bin}', async (req, res) => {
             ? bin
             : parseInt(req.params.bin) * HOUR;
         }
+
+        if (req.params.ii) {
+          no_img = false;
+        }
       }
 
-      const data = await getAnalysis(time, bin);
+      const data = await getAnalysis(time, bin, no_img);
 
       res.render('admin-analytics', {
         uvs: data['views'],

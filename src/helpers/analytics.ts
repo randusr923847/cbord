@@ -142,6 +142,7 @@ function sort_data(data: Record<string, number>): Record<string, number> {
 export async function getAnalysis(
   min_time: number,
   bin: number,
+  no_img: boolean,
 ): Promise<Record<string, Record<string, number>>> {
   const data = await View.find().lean().sort({ 'tss.0': 1 }).exec();
 
@@ -174,10 +175,12 @@ export async function getAnalysis(
       const ts = view.tss[i];
 
       if (ts >= min_time) {
-        if (view.page[i] in pages) {
-          pages[view.page[i]] += 1;
-        } else {
-          pages[view.page[i]] = 1;
+        if (!(no_img && view.page[i].includes('/img/'))) {
+          if (view.page[i] in pages) {
+            pages[view.page[i]] += 1;
+          } else {
+            pages[view.page[i]] = 1;
+          }
         }
 
         if (view.ua && view.ua in uas) {

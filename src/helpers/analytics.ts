@@ -122,10 +122,27 @@ function truncTime(time: number, bin: number): number {
   return Math.floor(time / bin) * bin;
 }
 
-export async function getUniqueViewers(
+// Adapted from https://stackoverflow.com/a/25500462
+function sort_data(data: Record<string, number>): Record<string, number> {
+  // Create items array
+  const items: [string, number][] = Object.keys(data).map(function (key) {
+    return [key, data[key]];
+  });
+
+  // Sort the array based on the second element
+  items.sort(function (first, second) {
+    return second[1] - first[1];
+  });
+
+  const sorted: Record<string, number> = Object.fromEntries(items);
+
+  return sorted;
+}
+
+export async function getAnalysis(
   min_time: number,
   bin: number,
-): Promise<Record<string, number>> {
+): Promise<Record<string, Record<string, number>>> {
   const data = await View.find().lean().sort({ 'tss.0': 1 }).exec();
 
   const start = Math.max(data[0].tss[0], min_time);
@@ -139,32 +156,52 @@ export async function getUniqueViewers(
     }
   }
 
-  const startTimeHr = truncTime(start, bin);
-  const endTimeHr = truncTime(end, bin);
+  const startTime = truncTime(start, bin);
+  const endTime = truncTime(end, bin);
 
-  const hours: Record<string, number> = {};
+  const views: Record<string, number> = {};
+  const pages: Record<string, number> = {};
+  const uas: Record<string, number> = {};
 
-  for (let t = startTimeHr; t <= endTimeHr; t += bin) {
-    const hr = toDateTimeString(new Date(t));
-    hours[hr] = 0;
+  for (let t = startTime; t <= endTime; t += bin) {
+    const time = toDateTimeString(new Date(t));
+    views[time] = 0;
   }
 
   for (const view of data) {
     let last = '';
     for (let i = 0; i < view.tss.length; i++) {
-      if (!view.page[i].includes('api')) {
-        const ts = view.tss[i];
+      const ts = view.tss[i];
 
+      if (ts >= min_time) {
+        if (view.page[i] in pages) {
+          pages[view.page[i]] += 1;
+        } else {
+          pages[view.page[i]] = 1;
+        }
+
+        if (view.ua && view.ua in uas) {
+          uas[view.ua] += 1;
+        } else if (view.ua) {
+          uas[view.ua] = 1;
+        }
+      }
+
+      if (!view.page[i].includes('api')) {
         if (ts >= min_time) {
-          const hr = toDateTimeString(new Date(truncTime(ts, bin)));
-          if (hr != last) {
-            hours[hr] += 1;
-            last = hr;
+          const time = toDateTimeString(new Date(truncTime(ts, bin)));
+          if (time != last) {
+            views[time] += 1;
+            last = time;
           }
         }
       }
     }
   }
 
-  return hours;
+  return {
+    pages: sort_data(pages),
+    views: views,
+    uas: sort_data(uas),
+  };
 }

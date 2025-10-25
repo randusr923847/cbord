@@ -23,8 +23,8 @@ import {
 import { newState } from './helpers/crypto';
 import { verifyAuth } from './helpers/auth';
 import { checkMod } from './helpers/mod';
-import { DAY, WEEK } from './helpers/time';
-import { trackRoute, getUniqueViewers } from './helpers/analytics';
+import { HOUR, DAY, WEEK } from './helpers/time';
+import { trackRoute, getAnalysis } from './helpers/analytics';
 import './types/session';
 import { clientPromise } from './db';
 import Event from './models/event';
@@ -172,12 +172,33 @@ app.get('/admin', async (req, res) => {
   }
 });
 
-app.get('/admin/analytics', async (req, res) => {
+app.get('/admin/analytics{/:time}{/:bin}', async (req, res) => {
   if (await verifyAuth(req)) {
     if (await checkMod(req.session.usr as string)) {
-      const time = Date.now() - 2 * WEEK;
-      const viewers = await getUniqueViewers(time, DAY);
-      res.render('admin-analytics', { uvs: viewers });
+      let time = Date.now() - 2 * WEEK;
+      let bin = DAY;
+
+      if (req.params) {
+        if (req.params.time) {
+          time = isNaN(parseInt(req.params.time))
+            ? time
+            : Date.now() - parseInt(req.params.time) * HOUR;
+        }
+
+        if (req.params.bin) {
+          bin = isNaN(parseInt(req.params.bin))
+            ? bin
+            : parseInt(req.params.bin) * HOUR;
+        }
+      }
+
+      const data = await getAnalysis(time, bin);
+
+      res.render('admin-analytics', {
+        uvs: data['views'],
+        pages: data['pages'],
+        uas: data['uas'],
+      });
     } else {
       res.render('404');
     }

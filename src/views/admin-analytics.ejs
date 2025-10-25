@@ -13,6 +13,8 @@
       /*to prevent Firefox FOUC, this must be here*/
       let FF_FOUC_FIX;
     </script>
+
+    <style></style>
   </head>
   <body>
     <div class="header">
@@ -22,25 +24,72 @@
     <div class="container">
       <div class="event-container">
         <div id="view-count"></div>
+        <br /><br />
+        <div id="pages"></div>
+        <br /><br />
+        <div id="uas"></div>
       </div>
     </div>
 
     <script src="/static/js/plotly-3.1.0.min.js"></script>
     <script>
-      const data = <%- JSON.stringify(uvs) %>;
+      const views = <%- JSON.stringify(uvs) %>;
       const viewers = document.getElementById('view-count');
+
       Plotly.newPlot(viewers, [{
-        x: Object.keys(data),
-        y: Object.values(data)
+        x: Object.keys(views),
+        y: Object.values(views)
       }], {
-        margin: {
-          b: 100,
-          r: 100,
+        xaxis: {
+          automargin: true
+        },
+        yaxis: {
+          automargin: true
         },
         title: {
           text: 'Unique Visitors',
         }
       });
+
+      const pages = <%- JSON.stringify(pages) %>;
+      const top_pages = document.getElementById('pages');
+
+      Plotly.newPlot(top_pages, [{
+        x: Object.keys(pages),
+        y: Object.values(pages),
+        text: Object.keys(pages).map(key => `<a href="${key}" target="_blank">link</a>`),
+        type: 'bar'
+      }], {
+        xaxis: {
+          automargin: true
+        },
+        yaxis: {
+          automargin: true
+        },
+        title: {
+          text: 'Top Routes',
+        }
+      });
+
+      const uas = <%- JSON.stringify(uas) %>;
+      const agents = document.getElementById('uas');
+
+      Plotly.newPlot(agents, [{
+        x: Object.keys(uas),
+        y: Object.values(uas),
+        type: 'bar'
+      }], {
+        xaxis: {
+          automargin: true
+        },
+        yaxis: {
+          automargin: true
+        },
+        title: {
+          text: 'User Agents',
+        }
+      });
+
 
       async function logout() {
         await fetch('/api/logout/', {

@@ -13,8 +13,6 @@
       /*to prevent Firefox FOUC, this must be here*/
       let FF_FOUC_FIX;
     </script>
-
-    <style></style>
   </head>
   <body>
     <div class="header">
@@ -57,7 +55,7 @@
       Plotly.newPlot(top_pages, [{
         x: Object.keys(pages),
         y: Object.values(pages),
-        text: Object.keys(pages).map(key => `<a href="${key}" target="_blank">link</a>`),
+        text: Object.keys(pages).map(key => `<a style="color: #000;" href="${key}" target="_blank">link</a>`),
         type: 'bar'
       }], {
         xaxis: {

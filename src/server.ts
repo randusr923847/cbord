@@ -119,7 +119,9 @@ app.get('/event/:eventId', async (req, res) => {
 
   if (event) {
     if (event.accepted == 1) {
-      res.render('event', { event: eventParser(event) });
+      res.render('event', {
+        event: eventParser(event, false, false, false, true),
+      });
     } else {
       res.render('pending', { id: event.id });
     }

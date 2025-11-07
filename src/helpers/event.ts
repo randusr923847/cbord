@@ -254,13 +254,14 @@ export function eventParser(
   include_email = false,
   include_submit_time = false,
   include_full_year = false,
+  max_now = true,
 ): CliEvent {
   const eventStart = new Date(data.startTime);
   const eventEnd = new Date(data.endTime);
 
   const start = toTZTimeString(eventStart);
   const end = toTZTimeString(eventEnd);
-  const date = dateString(eventStart, true, include_full_year);
+  const date = dateString(eventStart, max_now, include_full_year);
 
   let image = '';
 

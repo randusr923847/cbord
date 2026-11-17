@@ -36,6 +36,9 @@ window.onload = function () {
 };
 
 submit.onclick = async function () {
+  submit.disabled = true;
+  submit.innerHTML = "Processing...";
+
   formError.style.display = 'none';
   let data = {};
 
@@ -71,10 +74,14 @@ submit.onclick = async function () {
       if (res.success) {
         window.location.href = '/event/' + res.id;
       } else {
+        submit.disabled = false;
+        submit.innerHTML = "Submit";
         formError.style.display = 'block';
       }
     })
     .catch((err) => {
+      submit.disabled = false;
+      submit.innerHTML = "Submit";
       formError.style.display = 'block';
       console.log(err);
     });

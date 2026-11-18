@@ -37,7 +37,7 @@ window.onload = function () {
 
 submit.onclick = async function () {
   submit.disabled = true;
-  submit.innerHTML = "Processing...";
+  submit.innerHTML = "Submitting...";
 
   formError.style.display = 'none';
   let data = {};

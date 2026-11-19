@@ -120,6 +120,7 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
   let image = '';
 
   if (body.image === "don't update") {
+    // Image preset is a fall back incase mongo can't find the existing image
     image = "don't update|" + getImagePreset(tags);
   } else if (body.image) {
     if (!body.image_type) {

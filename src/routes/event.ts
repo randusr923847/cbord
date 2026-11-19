@@ -51,7 +51,10 @@ router.post('/:id/edit', async (req, res) => {
 
       if (updatedObj.image.split('|')[0] === "don't update") {
         const oldObj = await Event.find({ id: id });
-        updatedObj.image = oldObj[0].image ? oldObj[0].image : updatedObj.image.split(',')[1];
+        // if we can query an image, use that otherwise use the result of: getImagePreset(tags)
+        updatedObj.image = oldObj[0].image 
+          ? oldObj[0].image 
+          : updatedObj.image.split(',')[1];
       }
 
       const result = await Event.updateOne({ id: id }, updatedObj);

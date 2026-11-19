@@ -38,7 +38,7 @@ window.onload = function () {
 
 submit.onclick = async function () {
   submit.disabled = true;
-  submit.innerHTML = "Updating..."
+  submit.innerHTML = 'Updating...';
   formError.style.display = 'none';
   let data = {};
 

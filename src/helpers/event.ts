@@ -119,7 +119,9 @@ export function validateCreateReq(body: CreateBody): EventObj | string {
 
   let image = '';
 
-  if (body.image) {
+  if (body.image === "don't update") {
+    image = "don't update|" + getImagePreset(tags);
+  } else if (body.image) {
     if (!body.image_type) {
       return 'No image type';
     }

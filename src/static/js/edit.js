@@ -55,6 +55,8 @@ submit.onclick = async function () {
     let fileInfo = fileDisplay.src.split(',');
     data.image_type = fileInfo[0].split(';')[0].split(':')[1];
     data.image = fileInfo[1];
+  } else {
+    data.image = "don't update";
   }
 
   await fetch('/api/event/' + ID + '/edit', {

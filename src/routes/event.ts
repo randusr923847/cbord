@@ -49,6 +49,11 @@ router.post('/:id/edit', async (req, res) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { id: _, accepted: __, ...updatedObj } = obj;
 
+      if (updatedObj.image.split('|')[0] === "don't update") {
+        const oldObj = await Event.find({ id: id });
+        updatedObj.image = oldObj[0].image ? oldObj[0].image : updatedObj.image.split(',')[1];
+      }
+
       const result = await Event.updateOne({ id: id }, updatedObj);
       console.log(result);
       res.json({ success: result.modifiedCount == 1 });

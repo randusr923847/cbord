@@ -79,15 +79,15 @@ submit.onclick = async function () {
       if (res.success) {
         window.location.href = '/event/' + res.id;
       } else {
-        submit.innerHTML = "Error";
-        // wait 2 seconds to ensure the user actually reads the error
-        setTimeout(resetSubmit, 2000);
+        submit.innerHTML = "Failed to submit";
+        // wait 3 seconds to ensure the user actually reads the error
+        setTimeout(resetSubmit, 3000);
         formError.style.display = 'block';
       }
     })
     .catch((err) => {
-      submit.innerHTML = "Error";
-      setTimeout(resetSubmit, 2000);
+      submit.innerHTML = "Failed to submit";
+      setTimeout(resetSubmit, 3000);
       formError.style.display = 'block';
       console.log(err);
     });

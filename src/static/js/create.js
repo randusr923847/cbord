@@ -36,6 +36,9 @@ window.onload = function () {
 };
 
 submit.onclick = async function () {
+  submit.disabled = true;
+  submit.innerHTML = 'Submitting...';
+
   formError.style.display = 'none';
   let data = {};
 
@@ -56,6 +59,11 @@ submit.onclick = async function () {
     data.image = fileInfo[1];
   }
 
+  let resetSubmit = function () {
+    submit.disabled = false;
+    submit.innerHTML = 'Submit';
+  };
+
   await fetch('/api/event/create', {
     method: 'POST',
     mode: 'same-origin',
@@ -72,10 +80,13 @@ submit.onclick = async function () {
         window.location.href = '/event/' + res.id;
       } else {
         formError.style.display = 'block';
+        // wait 3 seconds to ensure the user actually reads the error
+        setTimeout(resetSubmit, 3000);
       }
     })
     .catch((err) => {
       formError.style.display = 'block';
+      setTimeout(resetSubmit, 3000);
       console.log(err);
     });
 };
